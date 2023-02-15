@@ -22,7 +22,13 @@ Full tasks and phases of the projects are available at the end of this readme fi
 
 #### Short description and my design decisions:
 
-
+* Map is generated randomly, and then it is checked to see if the rules are fulfilled, if not, it is generated again.
+* Used Floodfill Algorithm to check for islands.
+* Instead of having at least 5 mountain fields, I have decided to have at least 15 so that my map is _harder_ and require more steps to find my castle.
+* Castle is not randomly positioned, but it is placed on the most inaccessible grass field on the map. (None to little grass fields around it)
+* Used strategy pattern to switch between treasure finding and castle finding.
+* My AI will choose as target the most unexplored zone of the map, that means a position which has many neighbor fields that are unexplored yet.
+* For the shortest path, I have decided to use Dijkstra's Algorithm.
 
 
 #### Our full task:
