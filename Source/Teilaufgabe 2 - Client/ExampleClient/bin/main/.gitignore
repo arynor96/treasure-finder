@@ -1,0 +1,9 @@
+/client/
+/exceptions/
+/gameinfo/
+/halfmap/
+/logback.xml
+/map/
+/movement/
+/network/
+/view/
