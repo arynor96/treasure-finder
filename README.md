@@ -22,16 +22,31 @@ Full tasks and phases of the projects are available at the end of this readme fi
 
 #### Short description and my design decisions:
 
+
+Short description of how the game works: Firstly, the client has to establish connection to the server. Then, wait for the second player(client). When it is first's client turn, generate a valid half map and send it to the server. The server will merge those two maps and place treasures randomly on each player's half. After that, the game starts. As mentioned earlier, the game is turn based and each client has to send moves to the server to go to another field. The client can only move to the left, right, up or down. The client can never move outside the map or into a water field (it looses instantly). While moving, the AI has to firstly discover the treasure and then the enemy's castle. From a mountain field, the AI can see if there is a treasure or a castle around the field (8 fields around the current field). The first client to pick the treasure and reach the enemy castle wins.
+
+
+* Used converters to take and convert the network data and use it locally.
 * Map is generated randomly, and then it is checked to see if the rules are fulfilled, if not, it is generated again.
 * Used Floodfill Algorithm to check for islands.
 * Instead of having at least 5 mountain fields, I have decided to have at least 15 so that my map is _harder_ and require more steps to find my castle.
 * Castle is not randomly positioned, but it is placed on the most inaccessible grass field on the map. (None to little grass fields around it)
 * Used strategy pattern to switch between treasure finding and castle finding.
 * My AI will choose as target the most unexplored zone of the map, that means a position which has many neighbor fields that are unexplored yet.
-* For the shortest path, I have decided to use Dijkstra's Algorithm.
+* For the shortest path between my current AI's position and the target field, I have decided to use Dijkstra's Algorithm.
+
+<br>
+
+<p align="middle">
+  <img src="https://raw.githubusercontent.com/arynor96/treasure-finder/main/Dokumentation/Teilaufgabe%201%20-%20Planung/client_klassendiagramm.svg?token=GHSAT0AAAAAAB6MBAXPUV5LGWC4JTQKDWVKY7NOWLA"/>
+  Client Class Diagram
+</p>
 
 
-#### Our full task:
+
+<br>
+
+## Our full task:
 
 We had to follow these steps during the class:
 
@@ -40,7 +55,7 @@ We had to follow these steps during the class:
 * Read how the already implemented network protocol works and how the XML bodies look like.
 * Write requirements documentation.
 * Design the architecture of the client and the server. For that, class and sequential diagrams were required for the client and for the server. (all of them can be found inside the Dokumentation/Teilaufgabe 1 - Planung folder)
-  <br>
+<br>
 
 ##### Phase 2: Implement the client
 * Start implementing the client, an online server was provided by the lecturer so that we can test our clients in a game against AI, against our own client or against the client of another student.
