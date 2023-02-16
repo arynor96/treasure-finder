@@ -4,9 +4,10 @@ Client-Server Architecture individual project.
 
 The project consists in a client and a server, which I have implemented during [Software Engineering 1][1] class at the University of Vienna. The network communication was already implemented by the [lecturer][2], and my task was to develop the client and the server. <br>
 
+The client has an artificial intelligence that does not require human intervention. All decisions should be taken by the artificial intelligence. In the description below, there is more about that.
+
 Summary of the tasks and phases of the projects are available at the end of this readme file.
 Full project description, as received during class, can be found inside the Assignment folder in German language.
-
 
 #### Highlights of what I have done:
 
@@ -43,9 +44,17 @@ Short description of how the game works: Firstly, the client has to establish a 
   Client Class Diagram
 </p>
 
-
-
 <br>
+
+
+## UI
+
+<p align="middle">
+  <img src="https://github.com/arynor96/treasure-finder/blob/main/Dokumentation/Teilaufgabe%201%20-%20Planung/planed-UI.png?raw=true"/>
+</p>
+
+The final version of the UI looks similar to the one documented in the first phase of the project. Only small changes were made to the ASCI Codes of two elements, so it looks fine in any linux terminal.
+
 
 ## Summary of our tasks and phases:
 
