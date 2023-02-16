@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <title>Spielidee</title>
+    <meta charset="utf-8">
+    
+</head>
+<body>
+<a name="top"></a><h1>Spielidee</h1><p class="book_summary"></p><div class="book_toc_numbered"><a name="toc"></a><h2 class="text-center pb-5">Table of contents</h2><ul><li><a title="1. Beschreibung der Spielidee" class="font-weight-bold text-decoration-none" href="#ch115296">1. Beschreibung der Spielidee</a><ul><li><a title="1.1. Beispielhafte Visualisierung einer 10 x 10 Karte" class="text-decoration-none" href="#ch115303">1.1. Beispielhafte Visualisierung einer 10 x 10 Karte</a></li><li><a title="1.2. Detaillierte Beschreibung der Bewegungen" class="text-decoration-none" href="#ch115310">1.2. Detaillierte Beschreibung der Bewegungen</a></li></ul></li></ul></div><div class="book_chapter"><a name="ch115296"></a><h2>1. Beschreibung der Spielidee</h2><p>Die grundlegende Spielidee ist, dass zwei Clients bzw. deren KIs, <span><span><em>ohne menschliches Eingreifen</em></span></span>, auf der gleichen Spielkarte eine
+vergleichbare Aufgabe erfüllen müssen. Die KI, die diese schneller erfüllt,
+gewinnt das Spiel. Dabei werden die KIs von einem Server unterstützt der beide Clients koordiniert, Datenaustausch ermöglich, als Schiedsrichter auftritt und für Clients Daten speichert, aktualisiert und auswertet. Die <em>Grobarchitektur</em> ist damit als klassische Client/Server Architektur vorgegeben.&nbsp;</p><p>Initial gilt es am Server ein neues Spiel anzufordern. Dieser erste Schritt wird noch von einem Menschen durchgeführt, alles danach erfolgt immer vollautomatisch durch eine Client/KI-Implementierung. Nach Start des Clients registrieren sich die KIs für das Spiel am Server und erstellen/tauschen danach mit dem Server Kartenhälften aus. Die Karte, auf welcher gespielt wird, ist
+hierbei nicht fest vorgegeben, sondern entsteht durch die Kombination dieser zufällig erzeugten Kartenhälften durch den Server.</p><p><span style="font-size: 0.875rem;">Nach dem Kartenhälftenaustausch starten die Spielfiguren jeder KI jeweils auf einer selbst ausgewählten Position (ihrer </span><span class="" style="font-size: 0.875rem; color: rgb(51, 51, 51);">Burg</span><span style="font-size: 0.875rem;">) auf der von ihr erstellten Kartenhälfte.
+Anschließend muss jede KI die Karte erkunden um schnellstmöglich ihren&nbsp;</span><span class="" style="font-size: 0.875rem; color: rgb(255, 153, 0);">Schatz</span><span style="font-size: 0.875rem;"> und danach die gegnerische </span><span class="" style="font-size: 0.875rem; color: rgb(51, 51, 51);">Burg</span><span style="font-size: 0.875rem;"> zu
+finden. Hierzu wird je ein&nbsp;</span><span class="" style="font-size: 0.875rem; color: rgb(255, 153, 0);">Schatz</span><span style="font-size: 0.875rem;">&nbsp;vom Server auf jeder der beiden Kartenhälften&nbsp;<strong>versteckt</strong>. Der&nbsp;</span><span class="" style="font-size: 0.875rem; color: rgb(255, 153, 0);">Schatz</span><span style="font-size: 0.875rem;">&nbsp;einer KI ist <em>immer</em> auf der Kartenhälfte zu finden auf welcher die KI <span>startet</span>. Ausserdem kann er nur von dieser</span><strong style="font-size: 0.875rem;">&nbsp;</strong><span style="font-size: 0.875rem;">aufgenommen und gesehen werden</span><strong style="font-size: 0.875rem;"> (<em>kein</em>&nbsp;"Schatzdiebstahl").</strong><span style="font-size: 0.875rem;">&nbsp;</span></p><p>Um den <span class="" style="color: rgb(255, 153, 0);">Schatz</span> zu
+finden, bewegen beide KIs ihre Spielfigur über die Karte und decken dabei mit
+ihrer Spielfigur <em>schrittweise Kartenfelder auf</em>. &nbsp;Dieses "aufdecken" geschieht indem der Server die Position der KIs <em>auswertet</em> und die Spieldaten (z.B. was gesehen, aufgenommen, gewonnen/verloren) für die Clients passend aktualisiert.&nbsp; Ziel ist es dabei möglichst schnell den versteckten eigenen <span class="" style="color: rgb(255, 153, 0);">Schatz</span> und <em>danach</em> die gegnerische <span class="" style="color: rgb(51, 51, 51);">Burg</span> zu finden. Die KI entscheidet selbst, ohne menschliches Zutun, wie hierzu am Besten vorzugehen ist. Je geschickter <em>Algorithmen</em>, <em>Spielregeln</em> und eigene <em>Ideen</em> während der KI-Entwicklung ausgenützt werden desto schneller wird diese dabei sein.&nbsp;</p><p>Bereits direkt nach dem Kartenaustausch sind für die KIs <em>alle Terrains</em> aller Kartenfelder, alle&nbsp;Spielfigurpositionen und die <em>eigene <span class="" style="color: rgb(51, 51, 51);">Burg</span></em> sichtbar bzw. auf der vom Server abfragbaren Karte vermerkt. Andere Details wie der eigene <span class="" style="color: rgb(255, 153, 0);">Schatz</span> oder die gegnerische <span class="" style="color: rgb(51, 51, 51);">Burg</span> sind "<em>versteckt</em>" und müssen erst <em>gefunden</em>&nbsp;(aufgedeckt/gesehen) werden. Die Position der Gegnerspielfigur ist in den ersten Spielrunden <em>zufällig</em>, später entspricht diese der <em>echten</em> Gegnerposition.</p><div class="alert alert-info"><strong style="font-size: 0.875rem;">Zufällige vs. echte Position des Gegners</strong><span style="font-size: 0.875rem;">: </span><em style="font-size: 0.875rem;">Die ersten 16 Runden eines Spiels hat die vom Server gemeldete Position
+des Gegners zufällig zu sein.<em><em>&nbsp;Dies kann auch zu unerwarteten Positionsangaben für den Gegner führen (eigene Hälfte, Wasser etc.).&nbsp;</em></em>Zeigen Sie diese trotzdem einfach im Client-UI an.&nbsp; Warum? Dies verhindert, dass die Position der gegnerischen&nbsp;<span class="" style="color: rgb(51, 51, 51);">Burg</span> über die Spielerposition direkt verraten wird. Gleichzeitig kann der Client-Code immer davon ausgehen,
+dass Informationen über alle Spieler vorhanden sind. So ist keine Fallunterscheidung dafür im Client notwendig.</em></div>
+
+<p>Sobald eine KI "ihren" <span class="" style="color: rgb(255, 153, 0);">Schatz</span> gefunden bzw. aufgedeckt hat, muss sie ihre Spielfigur
+zu diesem bewegen, um ihn <em>aufnehmen</em> zu können. Danach, sobald der <span class="" style="color: rgb(255, 153, 0);">Schatz</span> aufgenommen wurde, muss die KI mit ihrer Spielfigur die gegnerische <span class="" style="color: rgb(51, 51, 51);">Burg</span>&nbsp;finden. Sobald diese gefunden wurde, muss die KI sich zu dieser bewegen, die Bewacher der <span class="" style="color: rgb(51, 51, 51);">Burg</span> mit dem gerade
+gefundenen <span class="" style="color: rgb(255, 153, 0);">Schatz</span> bestechen und so die <span class="" style="color: rgb(51, 51, 51);">Burg</span> "übernehmen". Hat die KI dies
+geschafft, gewinnt diese und damit auch der menschliche Spieler, der diese KI
+erstellt hat.</p><p>Das Aufnehmen eines <span class="" style="color: rgb(255, 153, 0);">Schatzes</span> und die Übernahme der <span class="" style="color: rgb(51, 51, 51);">Burg</span> erfolgen
+automatisch durch den Server, sobald eine Spielfigur das jeweilige Spielfeld der Karte betritt.&nbsp; Im Falle des&nbsp;<span class="" style="color: rgb(255, 153, 0);">Schatzes</span> wird hierbei der gerade aufgenommene&nbsp;<span>Schatz</span>&nbsp;direkt auch von der Karte entfernt (dieser ist jetzt im vom Server verwalteten "Inventar" der KI).</p><p><span style="font-size: 0.875rem;">Die Spielaktionen selbst werden rundenbasiert durchgeführt. Jede KI kann immer
+nur eine Aktion setzen (z.B. einen Bewegungsbefehl oder die Übertragung einer
+Kartenhälfte) und muss danach warten, bis die andere KI ihre Aktion gesetzt
+hat. Eine KI kann hierbei nicht auf das Setzen einer Aktion verzichten, sondern
+muss immer eine Aktion durchführen. Eine KI darf aber keine
+Aktion setzen solange die andere KI an der Reihe ist. Der Server unterstützt dies, können Clients doch abfragen ob diese gerade an der Reihe sind. Bestraft (indem betroffene Clients verlieren) aber auch Clients die diese und andere Spielregeln nicht einhalten.</span><br></p>
+
+<p>Um die Spiele für die Zuschauer spannend zu gestalten, wurde festgelegt, dass ein
+Spiel insgesamt nicht länger als <strong>320 Spielaktionen (und damit 320 Runden)&nbsp;</strong>dauern darf. Für <strong>jede dieser rundenbasierten Spielaktion hat die KI maximal 5 Sekunden</strong>
+Bedenkzeit. Insgesamt dauert ein Spiel maximal 10 Minuten. Sollten diese Bedingungen nicht erfüllt werden, verliert
+die KI, welche gerade an der Reihe ist, das Spiel automatisch und der
+zugehörige menschliche Spieler bekommt dies vom Client mitgeteilt. Der andere menschliche
+Spieler wird von seinem Client über seinen Sieg informiert. Das gleiche automatische Vorgehen
+wird auch angewendet, wenn auf normalem Weg gewonnen\verloren wird. Daher wenn eine KI mit ihrem <span class="" style="color: rgb(255, 153, 0);">Schatz</span> als Erster die gegnerische <span class="" style="color: rgb(51, 51, 51);">Burg </span>erreicht. Im Anschluss terminiert sich der Client immer selbstständig und sendet keine Aktionen (Kartenhäfte, Bewegungen) mehr an den Server.</p>
+
+<p>Die von den KIs bespielte Karte wird bei Beginn des Spiels von beiden beteiligten künstlichen Intelligenzen kooperativ erstellt. Hierzu erstellt jede der beiden KIs zufällig eine Hälfte der finalen Spielkarte
+(mit je 5 x 10 Feldern). Die Kartenhälften werden vom Server <em>zufällig</em> entweder an den kurzen
+(Kartenabmessungen 5 x 20) oder den langen Seiten (Kartenabmessungen 10 x 10) zusammengefügt. Wie dies geschieht können die KIs nicht beeinflussen und können/müssen daher vom Server den Zustand der gesamten Karte abfragen. Die Karten sind in Felder aufgeteilt, zwischen denen sich die
+Spielfiguren, auf Anweisung der KIs, schrittweise waagrecht und senkrecht bewegen. Jedes Feld repräsentiert
+genau eine von drei möglichen Terrainarten: <span class="" style="color: rgb(0, 102, 153);">Wasser</span>, <span class="" style="color: rgb(0, 136, 0);">Wiese</span> oder <span class="" style="color: rgb(51, 51, 51);">Berg</span>.</p>
+
+<p><span class="" style="color: rgb(51, 51, 51);">Burgen</span> und <span class="" style="color: rgb(255, 153, 0);">Schätze</span> werden ebenfalls auf eines der Felder gesetzt. Allerdings können die <strong><span class="" style="color: rgb(51, 51, 51);">Burg</span>&nbsp;(vom <em>Client</em>) und der <span class="" style="color: rgb(255, 153, 0);">Schatz</span>&nbsp;(vom <em>Server</em>) nur auf <span class="" style="color: rgb(0, 136, 0);">Wiesenfeldern</span> und nicht auf demselben Feld platziert werden</strong>. Außerdem darf <strong><span class="" style="color: rgb(0, 102, 153);">Wasser</span> unter keinen Umständen betreten</strong> werden (Spielfiguren können nicht schwimmen). Bewegt sich die Spielfigur einer KI in Richtung eines&nbsp;<span class="" style="color: rgb(0, 102, 153);">Wasserfeldes</span>, verliert die KI
+automatisch. Dies passiert auch wenn die Spielfigur von der <strong>Karte flüchten</strong> würde (z.B., wenn sich die Spielfigur
+bereits am linken Rand der Karte befindet und sich trotzdem weiter nach links bewegt).</p>
+
+<p><span class="" style="color: rgb(0, 102, 153);">Wasser</span> und <span class="" style="color: rgb(0, 136, 0);">Wiesen</span> können jeweils mit einer Bewegungsaktion betreten und im Fall von <span class="" style="color: rgb(0, 136, 0);">Wiesen</span>
+auch wieder verlassen werden. Sobald eine <span class="" style="color: rgb(0, 136, 0);">Wiese</span> betreten wurde, wird aufgedeckt, ob sich auf dieser <span class="" style="color: rgb(0, 136, 0);">Wiese</span> eine&nbsp;<span class="" style="color: rgb(51, 51, 51);">Burg</span> oder ein <span class="" style="color: rgb(255, 153, 0);">Schatz</span> befindet bzw. wird letzteres direkt aufgenommen. Im Gegensatz zu <span class="" style="color: rgb(0, 136, 0);">Wiesen</span> benötigen <span class="" style="color: rgb(51, 51, 51);">Berge</span> zwei
+Bewegungsaktionen, um diese (das <span class="" style="color: rgb(51, 51, 51);">Bergfeld</span>) zu betreten und zwei zusätzliche, um den <span class="" style="color: rgb(51, 51, 51);">Berg</span> wieder
+zu verlassen. Dafür werden beim Betreten des&nbsp;<span class="" style="color: rgb(51, 51, 51);">Bergfeldes</span>&nbsp;versteckte&nbsp;<span class="" style="color: rgb(255, 153, 0);">Schätze</span> und gegnerische&nbsp;<span class="" style="color: rgb(51, 51, 51);">Burgen</span> in bis <strong>zu einem Feld Entfernung</strong> (auch diagonal) rund um das&nbsp;<span class="" style="color: rgb(51, 51, 51);">Bergfeld </span>für die KI vom Server aufgedeckt.&nbsp;<span style="font-size: 0.875rem;">Eine KI verbleibt in der Visualisierung sowie den vom Server abfragbaren Positionsdaten so lange am ursprünglichen Spielfeld, bis diese ausreichend Bewegungen an den Server gesendet hat um das aktuelle Feld zu verlassen und das neue Feld zu betreten.&nbsp;</span></p><div class="alert alert-info"><span style="font-size: 0.875rem;">Im Abschnitt&nbsp;</span><a href="https://moodle.univie.ac.at/mod/book/view.php?id=14327088&amp;chapterid=115310" target="_blank" style="background-color: rgb(255, 255, 255); font-size: 0.875rem;">Detaillierte Beschreibung der Bewegungen</a><span style="font-size: 0.875rem;">&nbsp;werden die&nbsp;Bewegungsaktion, Schritte, Positionen und Runden für verschiedene Terrainkombinationen erläutert.</span></div><p></p><p><span style="font-size: 0.875rem;">Es kann jederzeit eine neue Bewegungsrichtung
+eingeschlagen werden (z.B. rechts statt links). Die Anzahl der notwendigen Bewegungsbefehle wird dann neu bestimmt und gezählt. Bereits an den Server gesandte Bewegungsbefehle <em>verfallen</em>, die dafür aufgewendeten Spielrunden zählen trotzdem als <em>verbraucht</em>. Wurden beispielsweise drei Bewegungsbefehle in eine Richtung geschickt (um zwischen <em>zwei <span class="" style="color: rgb(51, 51, 51);">Bergen</span></em> zu wechseln) und danach erfolgt ein Bewegungsbefehl in
+eine andere Richtung verfallen die drei bereits gesendeten Bewegungsbefehle. Selbst wenn danach wieder ein Bewegungsbefehl in die alte zuvor verwendete
+Richtung versendet werden würde.</span><br></p>
+
+<div class="alert alert-info"><em>Eine Spielfigur kann sich nur horizontal und
+vertikal zu direkt benachbarten Feldern bewegen, das Überspringen von Feldern
+ist nicht möglich.</em></div>
+
+<p><strong>Die KIs müssten während der Erstellung der&nbsp;Kartenhälften eine Reihe von Regeln einhalten:<br></strong></p><ul><li>Kartenhälften müssen <em>zufällig </em>mit <em>Algorithmen </em>generiert und nicht
+statisch vorgegeben werden. </li><li><span style="font-size: 0.875rem;"><strong>J</strong></span><strong style="font-size: 0.875rem;">ede Kartenhälfte muss mindestens 5 <span class="" style="color: rgb(51, 51, 51);">Bergfelder</span>, 24 <span class="" style="color: rgb(0, 136, 0);">Wiesenfelder</span>, 7 <span class="" style="color: rgb(0, 102, 153);">Wasserfelder</span>&nbsp;und genau eine, korrekt platzierte,&nbsp;<span class="" style="color: rgb(51, 51, 51);">Burg</span> beinhalten</strong><span style="font-size: 0.875rem;">.</span></li><li><span style="font-size: 0.875rem;">Es muss möglich sein von jedem Kartenfeld jedes andere Kartenfeld mit einer Reihe aus validen Bewegungsbefehlen betreten zu können. Dies gilt für alle Felder die nicht mit <span class="" style="color: rgb(0, 102, 153);">Wasser</span> bedeckt sind.</span><ul><li>Es dürfen&nbsp;<strong style="font-size: 0.875rem;">keine Inseln</strong><span style="font-size: 0.875rem;">&nbsp;generiert werden, daher dürfen&nbsp;</span><span style="font-size: 0.875rem; color: rgb(51, 51, 51);" class="">Berge</span><span style="font-size: 0.875rem;">&nbsp;und/oder&nbsp;</span><span style="font-size: 0.875rem; color: rgb(0, 136, 0);" class="">Wiesen</span><span style="font-size: 0.875rem;">&nbsp;niemals vollständig von&nbsp;</span><span style="font-size: 0.875rem; color: rgb(0, 102, 153);" class="">Wasser</span><span style="font-size: 0.875rem;">&nbsp;oder Kartengrenzen (oder einer Kombination aus beidem) umschlossen werden.</span></li><li><span><strong>J</strong></span><strong>ede Kartengrenze</strong><span>&nbsp;muss zu&nbsp;</span><strong>weniger als der Hälfte aus&nbsp;<span class="" style="color: rgb(0, 102, 153);">Wasserfeldern</span></strong><span>&nbsp;(maximal 4&nbsp;</span><span>an den langen und 2</span><span>&nbsp;an den kurzen Seiten) bestehen, um den Wechsel zwischen beiden Spielkartenhälften nicht zu verhindern.</span></li></ul></li><li><span style="font-size: 0.875rem;">Diese und andere in diesem Dokument genannte Bedingungen/Regeln sind vom Client einzuhalten und vom Server zu überprüfen.</span></li></ul><p></p><p>
+  Sollte eine der beiden von den KIs erstellten Kartenhälften gegen diese Bedingungen
+verstoßen, verliert die KI, welche die verstoßende Kartenhälfte generiert hat.
+Die andere KI gewinnt hierdurch automatisch.</p>
+
+<p>Während des Spiels müssen die Karte, deren bekannte Eigenschaften und wichtige Spielzustände von den Clients mittels&nbsp;<strong><span lang="en">command-line interface</span></strong>&nbsp;(CLI) visualisiert werden. Dies umfasst Spielfiguren, Positionen, Burgen, Felder, Terrains, Schätze, Bewegungen, Sieg/Niederlage, Kartenhälften etc. Dies dient dazu, dass menschliche Spieler mit
+dem Verhalten ihrer künstlichen Intelligenzen mitfiebern können.<br></p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115303"></a><h3>1.1. Beispielhafte Visualisierung einer 10 x 10 Karte</h3><p>Eine mögliche Visualisierung der Spielkarte, Burgen etc. samt Erläuterung der dargestellten Inhalte ist in der unterhalb angeführten Grafik ersichtlich.<span> Für Teilaufgabe 1 ist die Berücksichtigung eines&nbsp;<span style=""><span lang="en" style=""><em>command-line interface</em> zwingend notwendig. Eine <em>zusätzliche</em> grafische Oberfläche, wie hier genutzt, ist möglich aber nicht verpflichtend. Stellen Sie für die erste Teilaufgabe eigene Überlegungen an wie, was, wo visualisiert werden würde.</span></span></span><br><br><img src="data/BeispielhafteKarte.png" alt="Karte mit Erläuterungen" width="800" height="450" class="img-fluid atto_image_button_text-bottom"><br></p><div class="alert alert-info">Damit Sie sich den Ablauf des Spiels besser vorstellen können haben wir auch eine<strong>&nbsp;<a href="data/ExampleGame.mkv" target="_blank" style=""><span class="" style="color: rgb(0, 102, 153);"><u>Spielaufzeichnung</u></span></a>&nbsp;</strong>für Sie erzeugt (Codec: H.265, Playerempfehlung: VLC). Dieses zeigt ein komplettes beispielhaftes Spiel von Beginn bis Ende. Schritt für Schritt, inklusive Terrains, Schritte, Sichtweiten usw. Zuerst mit der Sichtweise des ersten Clients, danach umgeschalten auf die Sichtweise des zweiten Clients. Im Teilaufgabe 1 Tutorial sind diese Abläufe ebenfalls schrittweise erläutert.</div></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115310"></a><h3>1.2. Detaillierte Beschreibung der Bewegungen</h3><h4><span><b>Beispiel für den Bewegungsablauf zwischen zwei benachbarten <span class="" style="color: rgb(0, 136, 0);">Wiesenfeldern</span>:</b></span></h4><span>Gerade
+Spielrunden werden hierbei von der gegnerischen KI berechnet bzw. ausgeführt und sind daher nicht angeführt (dies gilt auch für die folgenden Beispiele).</span>
+<br>
+<table>
+<thead>
+<tr>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 1</th>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%281%29.png" alt="" role="presentation"></td>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%282%29.png" alt="" role="presentation"></td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Die Spielfigur der KI befindet sich auf <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> 1 und führt eine Bewegungsaktion in Richtung <span class="" style="color: rgb(0, 136, 0);">Wiese</span> 2 durch.&nbsp;<br>Runde 1 dient dazu, das <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> zu verlassen.</td>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Eine zweite Bewegungsaktion Richtung <span class="" style="color: rgb(0, 136, 0);">Wiese</span> 2 wird durchgeführt, um das <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> zu betreten.<br>Runde 3 dient dazu, das <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> zu betreten.</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4><span><b>Beispiel für den Bewegungsablauf zwischen <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> und <span class="" style="color: rgb(51, 51, 51);">Bergfeld</span>:</b></span></h4><span>Die Darstellung erfolgt für <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> auf <span class="" style="color: rgb(51, 51, 51);">Bergfeld</span>, die Bewegung von einem <span class="" style="color: rgb(51, 51, 51);">Bergfeld</span> auf ein <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> erfolgt analog.</span><br>
+<table>
+<thead>
+<tr>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 1</th>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 3</th>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%283%29.png" alt="" role="presentation"></td>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%283%29.png" alt="" role="presentation"><br></td>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%286%29.png" alt="" role="presentation"><br></td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Die Spielfigur der KI befindet
+sich auf dem <span class="" style="color: rgb(51, 51, 51);">Berg</span> und führt eine Bewegungsaktion in Richtung <span class="" style="color: rgb(0, 136, 0);">Wiese</span> durch.</td>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Eine zweite Bewegungsaktion
+Richtung <span class="" style="color: rgb(0, 136, 0);">Wiese</span> wird durchgeführt, um den <span class="" style="color: rgb(51, 51, 51);">Berg</span> zu verlassen. Runde 1 und 3
+dienen dazu, den <span class="" style="color: rgb(51, 51, 51);">Berg</span> zu verlassen.</td>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Der Berg wurde nun verlassen. Eine
+Bewegungsaktion Richtung <span class="" style="color: rgb(0, 136, 0);">Wiese</span> wird durchgeführt. Die Spielfigur der KI ist dadurch
+auf dem <span class="" style="color: rgb(0, 136, 0);">Wiesenfeld</span> angekommen. Runde 5 dient dazu die <span class="" style="color: rgb(0, 136, 0);">Wiese</span> zu betreten.</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h4><span><b>Beispiel für den Bewegungsablauf zwischen zwei benachbarten <span class="" style="color: rgb(51, 51, 51);">Bergfeldern</span>:</b></span></h4><span><span>
+<table>
+<thead>
+<tr>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 1</th>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 3</th>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 5</th>
+<th scope="col" style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Spielrunde 7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%287%29.png" alt="" role="presentation"></td>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%288%29.png" alt="" role="presentation"></td>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%289%29.png" alt="" role="presentation"></td>
+<td style="text-align: center; border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><img src="data/image%20%2810%29.png" alt="" role="presentation"></td>
+</tr>
+<tr>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Die Spielfigur der KI befindet sich auf <span class="" style="color: rgb(51, 51, 51);">Berg</span> 1 und <br>führt eine Bewegungsaktion in Richtung <span class="" style="color: rgb(51, 51, 51);">Berg</span> 2 durch.</td>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Eine zweite Bewegungsaktion Richtung <span class="" style="color: rgb(51, 51, 51);">Berg </span>2 wird durchgeführt, um <span class="" style="color: rgb(51, 51, 51);">Berg</span> 1 zu verlassen. <br> Runde 1 und 3 dienen dazu, <span class="" style="color: rgb(51, 51, 51);">Berg</span> 1 zu verlassen.</td>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);"><span class="" style="color: rgb(51, 51, 51);">Berg</span> 1 wurde nun verlassen. Da
+die Spielfigur der KI noch nicht auf dem zweiten <span class="" style="color: rgb(51, 51, 51);">Bergfeld</span> angekommen ist,wird diese aber noch auf <span class="" style="color: rgb(51, 51, 51);">Berg</span> 1 dargestellt.&nbsp;<br>Eine Bewegungsaktion in Richtung <span class="" style="color: rgb(51, 51, 51);">Berg</span> 2 wird durchgeführt.</td>
+<td style="border-width: 1px; border-style: solid; border-color: rgb(51, 51, 51);">Eine weitere Bewegungsaktion in Richtung <span class="" style="color: rgb(51, 51, 51);">Berg</span> 2 wird durchgeführt. Nach dieser Aktion befindet sich die Spielfigur nun auf <span class="" style="color: rgb(51, 51, 51);">Berg</span> 2. <br>Runde 5 und 7 dienen dazu, <span class="" style="color: rgb(51, 51, 51);">Berg</span> 2 zu betreten.</td>
+</tr>
+</tbody>
+</table></span></span></div><a href="#toc">&uarr; top</a>
+</body>
+</html>

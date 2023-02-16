@@ -1,0 +1,1244 @@
+<!doctype html>
+<html>
+<head>
+    <title>Netzwerkprotokoll</title>
+    <meta charset="utf-8">
+    
+</head>
+<body>
+<a name="top"></a><h1>Netzwerkprotokoll</h1><p class="book_summary"></p><div class="book_toc_numbered"><a name="toc"></a><h2 class="text-center pb-5">Table of contents</h2><ul><li><a title="1. Details zum Netzwerkprotokoll" class="font-weight-bold text-decoration-none" href="#ch115317">1. Details zum Netzwerkprotokoll</a></li><li><a title="2. Modellierung des Netzwerkes im UML Klassendiagramm (Teilaufgabe 1)" class="font-weight-bold text-decoration-none" href="#ch115457">2. Modellierung des Netzwerkes im UML Klassendiagramm (Teilaufgabe 1)</a></li><li><a title="3. Beispielhafter Ablauf eines Nachrichtenaustausches" class="font-weight-bold text-decoration-none" href="#ch115324">3. Beispielhafter Ablauf eines Nachrichtenaustausches</a></li><li><a title="4. Allgemeine Informationen über den Nachrichtenaustausch" class="font-weight-bold text-decoration-none" href="#ch115331">4. Allgemeine Informationen über den Nachrichtenaustausch</a></li><li><a title="5. Erstellung eines neuen Spiels" class="font-weight-bold text-decoration-none" href="#ch115338">5. Erstellung eines neuen Spiels</a><ul><li><a title="5.1. Anfrage des Clients oder eines Menschen" class="text-decoration-none" href="#ch115345">5.1. Anfrage des Clients oder eines Menschen</a></li><li><a title="5.2. Antwort des Servers" class="text-decoration-none" href="#ch115352">5.2. Antwort des Servers</a></li></ul></li><li><a title="6. Registrierung eines Clients" class="font-weight-bold text-decoration-none" href="#ch115359">6. Registrierung eines Clients</a><ul><li><a title="6.1. Anfrage des Clients" class="text-decoration-none" href="#ch115366">6.1. Anfrage des Clients</a></li><li><a title="6.2. Antwort des Servers" class="text-decoration-none" href="#ch115373">6.2. Antwort des Servers</a></li></ul></li><li><a title="7. Übertragung einer der beiden Kartenhälften" class="font-weight-bold text-decoration-none" href="#ch115380">7. Übertragung einer der beiden Kartenhälften</a><ul><li><a title="7.1. Anfrage des Clients" class="text-decoration-none" href="#ch115387">7.1. Anfrage des Clients</a></li><li><a title="7.2. Antwort des Servers" class="text-decoration-none" href="#ch115394">7.2. Antwort des Servers</a></li><li><a title="7.3. Tipps zum Verständnis der Kartenkoordinaten" class="text-decoration-none" href="#ch115401">7.3. Tipps zum Verständnis der Kartenkoordinaten</a></li></ul></li><li><a title="8. Abfrage des Spielstatus" class="font-weight-bold text-decoration-none" href="#ch115408">8. Abfrage des Spielstatus</a><ul><li><a title="8.1. Anfrage des Clients" class="text-decoration-none" href="#ch115415">8.1. Anfrage des Clients</a></li><li><a title="8.2. Antwort des Servers" class="text-decoration-none" href="#ch115422">8.2. Antwort des Servers</a></li></ul></li><li><a title="9. Übertragung einer Bewegung" class="font-weight-bold text-decoration-none" href="#ch115429">9. Übertragung einer Bewegung</a><ul><li><a title="9.1. Anfrage des Clients" class="text-decoration-none" href="#ch115436">9.1. Anfrage des Clients</a></li><li><a title="9.2. Antwort des Servers" class="text-decoration-none" href="#ch115443">9.2. Antwort des Servers</a></li></ul></li></ul></div><div class="book_chapter"><a name="ch115317"></a><h2>1. Details zum Netzwerkprotokoll</h2><p>Das im Folgenden beschriebene Netzwerkprotokoll dient dazu, dass Sie im Tournament ein standardisiertes Netzwerkprotokoll
+vorfinden. Dies ermöglicht Ihnen während des Tournaments gegen andere
+Studierende in einem freundschaftlichen Wettstreit anzutreten. Hierzu müssen
+Sie dieses Protokoll in Teilaufgabe 2 in Ihren Client, sowie in Ihrer
+Server-Implementierung in Teilaufgabe 3, integrieren. Die folgende Beschreibung
+des Protokolls ist immer im Zusammenspiel mit der Spielidee zu lesen, daher das
+Protokoll bildet die Anforderungen der <a href="https://moodle.univie.ac.at/mod/book/view.php?id=14327088" target="_blank">Spielidee</a> ab. Dieses Dokument dient nur
+zu Beschreibung des Protokolls. Die eigentliche Implementierung des
+Netzwerkprotokolls erhalten Sie im Verlauf des Semesters von der LV <strong>zur
+Verfügung gestellt</strong>. Diese können Sie dann einfach in Ihr Projekt einbinden.</p>
+<p>Im Folgenden werden die Nachrichten und technischen Hintergründe des Protokolls beschrieben. Die technologische Basis
+des Nachrichtenaustauschs stellt eine Restschnittstelle dar, daher es wird das
+HTTP Protokoll verwendet sowie die zugehörigen Operationen GET und POST. Die
+ausgetauschten Daten bzw. Nachrichten werden im XML Format definiert bzw. erwartet.</p><p><strong>Weiterführende Materialien:</strong> Sollten Sie sich für das Thema Netzwerkkommunikation, REST (inkl. Implementierung Client/Server), XML und XML Schema sowie grundlegende weiterführende Techniken der Netzwerkkommunikation interessieren (diese gehen über unseren Kurs hinaus) dann finden Sie ein passenden Skriptum <a href="data/Software%20Engineering%20I%20XML%2C%20XML%20Schema%2C%20Netzwerk.pdf">hier</a>. Die darin vermittelten Themen sind auch für andere Kurse wie Distributed Systems Engineering interessant.&nbsp;</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115457"></a><h2>2. Modellierung des Netzwerkes im UML Klassendiagramm (Teilaufgabe 1)</h2><p dir="ltr"><span id="docs-internal-guid-e8166214-7fff-e986-ce6d-2b02ccb1c79d">Modellieren Sie das Netzwerk <em>unabhängig</em> von den technischen Aspekten (REST, XML, HTTP etc.) als “normale” Methoden in einer Klasse. Diese technischen Details werden während der Implementierungsphase von der LV-Leitung bereitgestellt und lassen sich in diesen Entwurf gut integrieren. Jetzt während der Modellierung <em style="">abstrahieren</em> wir uns davon. Sie müssen diese daher hier <em>nicht</em> berücksichtigen.&nbsp;</span></p><span id="docs-internal-guid-e8166214-7fff-e986-ce6d-2b02ccb1c79d"><span style="font-size: 0.875rem;">Wir empfehlen <em>jeden relevanten Use Case</em> der Netzwerkkommunikation mit <em>mindestens einer Methode</em> abzudecken. Es kann auch sinnvoll sein, manche Use Cases in mehrere aufzuteilen. Achten Sie darauf: <strong>1)</strong> keinen relevanten Use Case zu übersehen (Registrieren, Karte austauschen etc.) und <strong>2)</strong> immer sicherzustellen, dass die Methoden auf die für den Use Case notwendigen Daten zugreifen können (z.B. mit Parametern). Welche Use Cases und Daten benötigt werden besprechen wir in den Tutorials, findet sich aber auch in der Dokumentation des Netzwerkprotokolls.&nbsp;</span><br><br><p dir="ltr"><strong>Beispiel anhand des Use Case “Karte austauschen”</strong>:&nbsp; In der Netzwerkklasse des <strong>Clients</strong> könnte man für diesen Use Case eine <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">sendMap</span> Methode vorsehen. <em>Wichtig</em>&nbsp;sind immer auch die <em>Daten - </em>für diesen Fall ist das mindestens die vom Client erzeugte Kartenhälfte! Um die Kartenhälfte irgendwie (das “wie” sind die hier abstrahierten technischen Details) dem Server zukommen lassen zu können muss <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">sendMap</span> auf diese zugreifen können. Eine klassische Lösung dafür wäre ein <em>Methodenparameter</em> welcher die zu versendenden Informationen beinhaltet. Daher beispielsweise <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">public void sendMap(ClientMap map)</span>. Hier wäre der Parameter <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">ClientMap map </span>eine von Ihnen erstellte Klasse welche von Ihren Client-Kartengenerierungsalgorithmen erzeugt<span style="font-size: 0.875rem;">&nbsp;wird. Zugriff auf die Antwort des Servers (den <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">ResponseEnvelope</span>) erhalten Sie direkt in der sendenden Methode. Daher Sie können davon ausgehen innerhalb von <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">sendMap</span> Zugriff auf ein Variable vom Typen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">ResponseEnvelope</span> mit der Antwort des Servers auf die gerade von Ihnen zugesandten Karte zu haben.</span></p><p dir="ltr">Wenn der Client etwas <em>versendet</em>, wird am <strong>Server</strong> das <em>empfangende Gegenstück </em>benötigt. Auch hier können Sie wieder mit <em>einer Klasse</em> und darin&nbsp;<em>einer Methode pro Use Case</em> arbeiten. Für den Use Case “Karte austauschen” ergäbe das beispielsweise eine Netzwerkklasse am Server mit z.B. einer Methode <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">receiveMap</span>. Auch hier sind wieder die <em>Daten wichtig</em>. So muss der Server <em>Kartendaten</em> <em>empfangen</em> (laut Netzwerkprotokoll mit einer <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">PlayerHalfMap</span> Klasse) und <em>eine Antwort</em> an den Client <em>zurücksenden</em> (laut Netzwerkprotokoll als <strong>Rückgabeparameter</strong> vom Type <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">ResponseEnvelope</span>). Dies könnte wie folgt modelliert werden: <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">public ResponseEnvelope receiveMap(PlayerHalfMap map)</span>&nbsp;. Auch hier können die <em>technischen Details</em> wie REST, XML, wie Objekte von/zu XML umgewandelt werden etc. <em>ignoriert</em> werden. Die <strong>Bezeichnungen (Namen) der Datenklassen</strong> für den <em>Netzwerkteil&nbsp; des Servers</em> (Parameter und Rückgabetypen der Methoden am Server) finden Sie hier im <strong>Netzwerkprotokoll</strong>, übernehmen Sie diese.</p><p dir="ltr" style="text-align: center; "><span style="font-size: 0.875rem;"><img src="data/BeispielNetzwerkmodellierung.svg?time=1662675777241" alt="Beispiel wie Client/Server Netzwerkkommunikation für die Übung in UML modelliert werden könnte" width="779" height="230" class="img-fluid atto_image_button_text-bottom"><br></span></p><p dir="ltr"><span style="font-size: 0.875rem;">Zur <strong>Verdeutlichung</strong> hier noch einmal als <strong>Klassendiagramm</strong> (siehe oben). Natürlich können Sie von dem gegebenen Beispiel <em>abweichen</em> (andere Namen, andere Datenklassen, mehr Methoden, Felder, Konstruktoren etc.). <em>Beachten</em> Sie dabei immer die zu <em>Beginn genannten Dinge</em>: 1) <em>alle relevanten Use Cases</em> abdecken 2) mindestens <em>eine Methode pro Use Case</em>&nbsp; 3) die <em>notwendigen Daten</em> sind berücksichtigt und 4) beim <em>Server</em> sind immer die Bezeichnungen aus dem <em>Netzwerkprotokoll</em> für Parameter/Rückgabetypen zu verwenden.</span><br></p></span><strong>Etwas fehlt</strong>: Sehen Sie sich den Server und dessen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">receiveMap</span> noch einmal an und vergleichen es mit dem Abschnitt über die Kartenhälftenübertragung. Hier wurde ein wichtiges&nbsp;Datum vergessen, können Sie feststellen welches? Im ersten Tutorial haben wir das ebenfalls erwähnt. Falls Sie unsicher sind was fehlt Fragen Sie in der Übung!<br><br><p></p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115324"></a><h2>3. Beispielhafter Ablauf eines Nachrichtenaustausches</h2><p>Zum Einstieg ist unterhalb ein beispielhafter Nachrichtenaustausch, basierend auf dem hier beschriebenen
+Protokoll, abgebildet. Die genauen Details zu jeder Nachricht finden Sie auf den folgenden Seiten. Hier in der Netzwerkprotokolldokumentation konzentrieren wir uns <strong>nur</strong> auf den <strong><em>Nachrichtenaustausch</em></strong> zwischen Clients und Server. Ausgaben an den Menschen, internes Verhalten des Clients oder Servers etc. lassen wir hier entsprechend weg.</p><div class="alert alert-success"><em>Ein wichtigste Detail, auf das Sie achten sollten, ist, dass das Spiel rundenbasiert abläuft. </em>Entsprechend müssen Sie wiederholt mit
+den Statusnachrichten ermitteln ob Ihr Client überhaupt derzeit eine Aktion absetzen darf. Erst sobald dies der Fall ist darf die Aktion durchgeführt werden. Wichtig für: die Übertragung der Kartenhälften&nbsp;<strong style="">und </strong>der Bewegungen.</div><p><img src="data/BeispielMessageExchangeSeqDia.png" alt="Beispielhafter Nachrichtenaustausch" width="1196" height="1999" class="img-fluid atto_image_button_text-bottom"><br></p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115331"></a><h2>4. Allgemeine Informationen über den Nachrichtenaustausch</h2><p>Im Folgenden werden Anfragen des Clients an den Server und erwartete Antworten vom Server zum Client angeführt. Hierbei ist wesentlich, dass die meisten Antworten von einem allgemeinen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">responseEnvelope </span>gekapselt werden. Dieser nimmt die eigentlichen Daten, die übertragen werden sollen auf und bietet jedoch darüber hinaus auch die Möglichkeit mitzuteilen ob
+eine Anfrage vom Client korrekt oder inkorrekt war.&nbsp;</p><p>Darüber hinaus wird im
+Falle einer inkorrekten Anfrage typischerweise eine Fehlermeldung zusätzlich
+retourniert. Einen weiteren Spezialfall stellt die Initialisierung eines neuen
+Spieles dar. Hierzu wird auf einen vorgebenden Endpoint mittels einer HTTP GET
+Operation zugegriffen und der Server antwortet entsprechend mit einer <b>SpielID</b>. Diese schlägt niemals fehl.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115338"></a><h2>5. Erstellung eines neuen Spiels</h2><p dir="ltr" style="text-align: left;"></p><p><span lang="DE-AT">Bevor zwei Clients gegeneinander antreten können
+muss ein neues Spiel am Server erstellt werden. Typischerweise wird dies&nbsp;</span><span lang="DE-AT" style="font-size: 0.875rem;">nicht
+von den KIs bzw. Clients (technisch möglich, nicht empfohlen) sondern von einem Menschen durchgeführt. Hierzu ist es notwendig
+auf den unten beschriebenen Endpoint zuzugreifen, indem eine HTTP GET Anfrage an
+diesen gesandt wird. <span><em>Ein normaler Webbrowser ist alles was dafür benötigt wird</em></span>.&nbsp;</span></p><p><span lang="DE-AT" style="font-size: 0.875rem;"><em>Client-Header:</em> Da die Antwort mit Daten im XML Format definiert
+wird, sollte die Anfrage einen entsprechenden <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"</span></span><span lang="DE-AT" class="" style="font-size: 0.875rem; font-family: &quot;Courier New&quot;, Courier, mono;">accept"</span><span lang="DE-AT" style="font-size: 0.875rem;">&nbsp;HTTP Header beinhalten, daher <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"</span></span><span lang="DE-AT" class="" style="font-size: 0.875rem; font-family: &quot;Courier New&quot;, Courier, mono;">accept = application/xml"</span><span lang="DE-AT" style="font-size: 0.875rem;">. Dies ist nur zu beachten wenn mit dem Client ein neues Spiel erzeugt wird (nicht empfohlen).&nbsp;</span></p><br><p></p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115345"></a><h3>5.1. Anfrage des Clients oder eines Menschen</h3><p>Senden Sie eine HTTP GET Operation (alternativ auch mit HTTP POST möglich) an folgenden Endpoint <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;"><b>http(s)://&lt;domain&gt;:&lt;port&gt;/games&nbsp;</b></span></p>
+
+<p>Der Server antwortet mit einer XML Nachricht, die eine eindeutige <span style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> beinhaltet. Details hierzu sind unterhalb zu finden. Da diese <span style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> für jedes Spiel eindeutig ist kann diese im Folgenden verwendet werden um Nachrichten einem bestimmten Spiel zuzuordnen und dadurch kann vom Server unterschieden werden
+für welches Spiel eine eingehende Nachricht gedacht ist. Hierdurch können parallel mehrere Spiele von verschiedenen Spielern durchgeführt werden.</p><p>
+  <i>Um die Ressourcen des Servers zu schonen gilt die Einschränkung, dass maximal 999
+Spiele parallel ausgeführt werden dürfen. Sobald die Zahl der gleichzeitig
+laufenden Spiele die 999 Spiele übersteigt werden ältere (bzw. das älteste) Spiele automatisch
+entfernt und mit den neueren danach erstellten Spielen ersetzt. Weiters wird
+jedes Spiel 10 Minuten nach der Spielerzeugung automatisch entfernt,
+sodass keine weiteren Nachrichten an dieses gesandt werden können.</i></p>
+
+<p><b>Debug Modus aktivieren:</b> Ein Debug Modus kann für das zu erstellende Spiel aktiviert werden indem
+der Parameter <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">enableDebugMode</span> mit dem Wert <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"true"</span> an die URL angehängt wird. Entsprechend ändert sich die Endpoint URL auf <b><span lang="DE-AT" class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">http(s)://&lt;domain&gt;:&lt;port&gt;/games?enableDebugMode=true</span><br></b> 
+  Sobald dies passiert wird die Business Rule, dass ein Client nicht länger als 5 Sekunden Zeit hat, um eine Aktion zu
+senden aufgehoben. Alle anderen Business Rules werden weiterhin überprüft.</p>
+
+<p><b>Dummy Partner aktivieren: </b> Ein Dummy-KI-Gegner kann für das zu erstellende Spiel aktiviert werden indem der Parameter <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">enableDummyCompetition</span> mit dem Wert <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"true"</span> an die URL angehängt wird. Entsprechend ändert sich die Endpoint URL auf <span lang="DE-AT" class="" style="font-family: &quot;Courier New&quot;, Courier, mono;"><b>http(s)://&lt;domain&gt;:&lt;port&gt;/games?enableDummyCompetition=true</b><br></span>
+  Sobald dies passiert wird automatisch, sobald sich Ihr Client registriert ein zweiter Client von der LV Leitung zugeschaltet. Dieser bewegt sich zwischen zufällig ausgewählten Feldern auf der Karte und wird in der Regel deshalb eher nur per Zufall ein Spiel gewinnen. Auch die Kartenhälfte welche dieser Client erzeugt ist komplett zufällig.&nbsp;</p>
+
+<p><i>Achtung:</i> Diese Optionen sollen das Debuggen erleichtern, auf dem automatischen Evaluierungssystem sind diese nicht aktiv. Beide Optionen können kombiniert werden, verbinden Sie diese hierzu mit <b><span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">&amp;</span></b>.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115352"></a><h3>5.2. Antwort des Servers</h3><p>Diese Antwort wird als Reaktion auf die oberhalb beschriebene Anfrage nach der Erstellung eines neuen Spiels gesendet. Die in XML definierte Nachricht beinhaltet als Hauptbestandteil ein Element namens uniqueGameID die eine
+eindeutige <b>SpielID</b> beinhaltet (diese ID muss aus exakt 5 Zeichen bestehen).
+Diese <b>SpielID</b> muss in den folgenden Anfragen als Teil der Endpoint-Adresse verwendet werden, sodass dem Server bekannt gemacht wird für welches Spiel eine Nachricht gedacht ist.</p>
+
+<span><b>XML Schema der Nachricht</b></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> </span><span lang="DE-AT">version</span><span lang="DE-AT">=</span><span lang="DE-AT">"1.0"</span><span lang="DE-AT"> </span><span lang="DE-AT">encoding</span><span lang="DE-AT">=</span><span lang="DE-AT">"UTF-8"</span><span lang="DE-AT">?&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT">
+</span><b><span lang="DE-AT">xmlns:xs</span></b><span lang="DE-AT">=</span><span lang="DE-AT">"</span><span lang="DE-AT"><a href="http://www.w3.org/2001/XMLSchema" target="_blank">http://www.w3.org/2001/XMLSchema</a></span><span lang="DE-AT">"</span><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"uniqueGameIdentifier"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:complexType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:sequence</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"uniqueGameID"</span><span lang="EN-GB"> <b>maxOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> <b>minOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB"> <b>base</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"xs:string"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:minLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"5"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:maxLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"5"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:sequence</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:complexType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"> </span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"> </span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT">&gt;<br><br></span></span>
+
+<span><b>Beispiel der Nachricht: </b>Die eindeutige <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> eines Spiels wäre im folgenden Beispiel "Ss8Zc".</span><br>
+
+<span><span lang="EN-GB">&lt;?</span><span lang="EN-GB">xml</span><span lang="EN-GB"> version="1.0"
+encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">uniqueGameIdentifier</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; </span><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">uniqueGameID</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT">Ss8Zc&lt;/<b>uniqueGameID</b>&gt;</span></span><br>
+
+<span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">uniqueGameIdentifier</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115359"></a><h2>6. Registrierung eines Clients</h2><p>Sobald ein Spiel erstellt wurde und beiden Clients die eindeutige <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> (siehe oben) bekannt ist können sich die Clients für das neue Spiel registrieren. Wichtig dabei ist, dass kein Mechanismus vorgesehen ist um beiden Clients direkt vom Server ausgehend die gleiche <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> mitzuteilen. Daher es ist vorgesehen, dass die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> einmalig durch einen Menschen
+erzeugt wird (z.B. indem über einem Webbrowser auf den Endpoint zu Erstellung
+eines neuen Spiels zugegriffen wird) und dann beispielsweise die Clients mit
+der <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> als Startparameter
+gestartet werden. Hierdurch können beide Clients ungefähr zur gleichen Zeit
+beginnen mit dem Server zu interagieren. Informationen zur Verarbeitung der
+Startparameter finden Sie auf Moodle in der Angabe zu Teilaufgabe 2.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115366"></a><h3>6.1. Anfrage des Clients</h3><p>Der Client sendet einen HTTP POST Request mit einer XML Nachricht im Body an folgenden Endpunkt: <b><span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">http(s)://&lt;domain&gt;:&lt;port&gt;/games/&lt;SpielID&gt;/players</span></b>
+
+</p><p>Hierbei ist der Teil <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">‹SpielID›</span> mit der während der Spielerzeugung erhaltenen eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> zu ersetzen. Als Body der Nachricht werden Informationen zum Entwickler des Clients übertragen. Dies wären der Vorname (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">studentFirstName</span>),
+der Nachname (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">studentLastName</span>) und Ihr u:account username (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">studentUAccount</span>). Letzteres muss identisch sein zum u:account Benutzer welchen Sie beim Login auf Moodle nützen.</p>
+
+<span><b>XML Schema der Nachricht</b></span>
+<br><span align="left"><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> </span><span lang="DE-AT">version</span><span lang="DE-AT">=</span><span lang="DE-AT">"1.0"</span><span lang="DE-AT"> </span><span lang="DE-AT">encoding</span><span lang="DE-AT">=</span><span lang="DE-AT">"UTF-8"</span><span lang="DE-AT">?&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp;&nbsp; <b>xmlns:xs</b></span><span lang="DE-AT">=</span><span lang="DE-AT">"<a href="http://www.w3.org/2001/XMLSchema" target="_blank">http://www.w3.org/2001/XMLSchema</a>"</span><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"playerRegistration"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:complexType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:sequence</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"studentFirstName"</span><span lang="EN-GB"> <b>maxOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> <b>minOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB"> <b>base</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"xs:string"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:minLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:maxLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"50"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"studentLastName"</span><span lang="EN-GB"> <b>maxOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> <b>minOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB"> <b>base</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"xs:string"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:minLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:maxLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"50"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"studentUAccount"</span><span lang="EN-GB"> <b>maxOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> <b>minOccurs</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB"> <b>base</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"xs:string"</span><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:minLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"1"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:maxLength</span></b><span lang="EN-GB"> <b>value</b></span><span lang="EN-GB">=</span><span lang="EN-GB">"50"</span><span lang="EN-GB"> </span><span lang="EN-GB">/&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:restriction</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:simpleType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:sequence</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:complexType</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT">&gt;</span></span><br><br>
+
+<span><b>Beispiel der Nachricht</b></span>
+
+<br><span>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br>
+
+<span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">playerRegistration</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">studentFirstName</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB">Max</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">studentFirstName</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">studentLastName</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB">Muster</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">studentLastName</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">studentUAccount</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB">musterm87</span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">studentUAccount</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">playerRegistration</span></b><span lang="DE-AT">&gt;<br></span><span lang="DE-AT"></span></span><br>
+
+<p><i>Validierung der Daten: </i>Es können grundlegend beliebige Daten eingetragen werden, daher ein Abgleich mit den Daten der Studierenden findet nicht statt (Sie erhalten bei "falschen" Daten, z.B. nicht existenten Vornamen, keine Fehlermeldung). Jedoch ist die Längenbeschränkung zu beachten. Falls Sie Bonuspunkte für den Cliententwicklungsfortschritt erhalten möchten ist folgendes zu beachten:</p>
+
+<p><i>Client-Fortschritt:</i> Damit die automatische Auswertung Ihres Fortschritts unter <i><a href="http://swe1.wst.univie.ac.at/" target="_blank">http://swe1.wst.univie.ac.at/</a></i> wie gedacht funktioniert empfehlen wir, dass
+Sie als <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">studentUAccount</span> immer Ihren richtigen u:account Benutzer verwenden (dieser muss identisch zu dem u:account Benutzer von Moodle bzw. ihrem Moodle Profil sein). Andernfalls können beispielsweise die Bonuspunkte für die Minideadlines von Teilaufgabe 2 nicht vergeben werden.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115373"></a><h3>6.2. Antwort des Servers</h3><p>Der Server antwortet auf die Registrierungsnachricht (siehe oben) mit einer Bestätigung über die Durchführung der Registrierung sowie einer entsprechenden eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span>. Diese <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span> muss bei den folgenden Anfragen mit übertragen werden damit dem Server bekannt ist von welchem Client (bzw. Spieler) diese Anfrage gestellt wurde.</p>
+
+<p>Diese und die folgenden Nachrichten des Servers werden von einem <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">responseEnvelope</span> Element umschlossen. Dieser <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">responseEnvelope</span> ist auf zwei Fälle ausgelegt, welche über das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> Element unterschieden werden können. Beinhaltet das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> Element den Text <strong>Okay</strong> konnte die Anfrage korrekt verarbeitet werden und
+die erwarteten Daten (wie in diesem Fall die <span><span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span></span>) können im <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">data</span> Element gefunden werden. Zeigt das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> Element jedoch den Wert <strong>Error</strong> dann ist ein Fehler aufgetreten z.B., weil eine Geschäftsregel verletzt worden ist. Für diesen Fall ist der Namen einer zugehörigen Fehlermeldung im Element <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">exceptionName</span> zu finden und ein Hinweistext über den aufgetretenen Fehler im Element <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">exceptionMessage</span>. Dieses Verhalten wird auch bei allen kommenden Nachrichten angewendet und hilft Ihnen dabei Fehler im Client zu identifizieren.</p>
+
+<span><strong>XML Schema der Nachricht</strong></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><strong><span lang="DE-AT">xs:schema</span></strong><span lang="DE-AT"> <strong>xmlns:xs</strong>="<a href="http://www.w3.org/2001/XMLSchema" class="_blanktarget">http://www.w3.org/2001/XMLSchema</a>"&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><strong><span lang="EN-GB">xs:element</span></strong><span lang="EN-GB"> <strong>name</strong>="responseEnvelope"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:complexType</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:sequence</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:element</strong>
+<strong>name</strong>="exceptionName" type="xs:string"
+<strong>minOccurs</strong>="1" <strong>maxOccurs</strong>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:element</strong>
+<strong>name</strong>="exceptionMessage" type="xs:string"
+<strong>minOccurs</strong>="1" <strong>maxOccurs</strong>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:element</strong>
+<strong>name</strong>="state" type="statevalues"
+<strong>minOccurs</strong>="1" <strong>maxOccurs</strong>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:element</strong>
+<strong>name</strong>="data" <strong>minOccurs</strong>="1" <strong>maxOccurs</strong>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>xs:sequence</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>xs:complexType</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<strong>xs:element</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<strong>xs:complexType</strong>
+<strong>name</strong>="uniquePlayerIdentifier"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:sequence</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:element</strong>
+<strong>name</strong>="uniquePlayerID" type="xs:string"
+<strong>minOccurs</strong>="1" <strong>maxOccurs</strong>="1" /&gt;</span></span><span align="left"><span lang="EN-GB"><br>
+<span align="left"><span lang="EN-GB">&nbsp; &nbsp; &nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span></span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<strong>xs:complexType</strong>&gt;</span></span><br> 
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<strong>xs:simpleType</strong>
+<strong>name</strong>="statevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:restriction</strong>
+<strong>base</strong>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:enumeration</strong>
+<strong>value</strong>="Okay" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<strong>xs:enumeration</strong>
+<strong>value</strong>="Error" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<strong>xs:restriction</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<strong>xs:simpleType</strong>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&lt;/</span><strong><span lang="EN-GB">xs:schema</span></strong><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br><br>
+
+
+<span><b>Beispiel der Nachricht</b></span><br>
+
+<span><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;</span><strong><span lang="EN-GB">responseEnvelope</span></strong><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<strong>exceptionName</strong>/&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<strong>exceptionMessage</strong>/&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<strong>state</strong>&gt;Okay&lt;/<strong>state</strong>&gt;</span></span>
+
+<span align="left"><span lang="EN-GB">&nbsp;&lt;</span><strong><span lang="EN-GB">data</span></strong><span lang="EN-GB"> <strong>xmlns:xsi</strong>="<a href="http://www.w3.org/2001/XMLSchema-instance" class="_blanktarget">http://www.w3.org/2001/XMLSchema-instance</a>"
+<strong>xsi:type</strong>="uniquePlayerIdentifier"&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<strong>uniquePlayerID</strong>&gt;702ecdb6-b363-462c-a63a-5d0a39222c4e&lt;/<strong>uniquePlayerID</strong>&gt;</span></span><br>
+
+<span><a name="_3znysh7"></a><span lang="EN-GB">&nbsp;</span><span lang="DE-AT">&lt;/</span><strong><span lang="DE-AT">data</span></strong><span lang="DE-AT">&gt;</span><span lang="DE-AT"> </span></span><br>
+
+<span lang="DE-AT">&lt;/</span><strong><span lang="DE-AT">responseEnvelope</span></strong><span lang="DE-AT">&gt;</span></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115380"></a><h2>7. Übertragung einer der beiden Kartenhälften</h2><p>Im Anschluss an die Registrierung eines Spielers muss der Client eine Kartenhälfte generieren und an den Server übertragen. Hierbei wird jedes Feld individuell definiert, basierend auf dem Typ des
+Feldterrains sowie einer möglicherweise vorhandenen Burg. Wichtig hierbei ist,
+dass auf mindestens einem Feld eine Burg positioniert sein muss, gleichzeitig,
+aber auch nicht mehr wie ein Feld gleichzeitig eine Burg beinhalten darf.
+Weitere Regeln zur Beschaffenheit der Karten sind in der Angabe zu finden.
+Diese werden nicht mit dem XML Schema überprüft bzw. sichergestellt, sondern
+über die Validierung der Geschäftsregeln am Server.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115387"></a><h3>7.1. Anfrage des Clients</h3><p>Der Client sendet einen HTTP POST Request mit einer XML Nachricht im Body an folgenden Endpunkt: <b><span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">http(s)://&lt;domain&gt;:&lt;port&gt;/games/&lt;SpielID&gt;/halfmaps</span></b></p>
+
+<p>Hierbei ist der Teil <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">‹SpielID›</span> mit der während der Spielerzeugung erhaltenen eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> zu ersetzen. Als Body der Nachricht werden Informationen zur Kartenhälfte verwendet. Diese bestehen aus der eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span>, um den Server wissen zu lassen welcher Client die Daten zugesandt hat und außerdem aus einer Liste von Feldern, die über <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">playerHalfMapNode</span> Elemente abgebildet werden. Jedes <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">playerHalfMapNode</span> Element wiederum besteht aus einer X (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">X</span> Element) und einer Y Koordinate (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">Y</span> Element), dem Terrain des Feldes und einem booleschen Flag, welches repräsentiert ob auf diesem Feld eine Burg vorhanden ist oder nicht (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">fortPresent</span> Element).</p>
+
+<p><b>Informationen zur Ordnung/Sortierung der Inhalte:</b> <i>Wenn Sie Ihre mit den hier besprochenen Nachrichten an den Server übertragene Karte über die Statusnachrichten wieder abfragen wird die
+Reihenfolge der Felder nicht mehr der Reihenfolge entsprechen, die Sie bei der
+Übertragung verwendet haben. Nützen Sie daher die X/Y Koordinaten der Felder, um
+auf die passenden Felder zu identifizieren und auf diese zuzugreifen.</i><i style="font-size: 0.875rem;"><span lang="DE-AT">&nbsp;</span></i></p>
+
+<span><b>XML Schema der Nachricht</b></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT"> <b>xmlns:xs</b>="<a href="http://www.w3.org/2001/XMLSchema" class="_blanktarget">http://www.w3.org/2001/XMLSchema</a>"&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b>="playerHalfMap"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="uniquePlayerID" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="playerHalfMapNodes" <b>minOccurs</b>="1" <b>maxOccurs</b>="1"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;<b>xs:element</b> <b>name</b>="playerHalfMapNode"
+<b>minOccurs</b>="50" <b>maxOccurs</b>="50"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="X" <b>minOccurs</b>="1" <b>maxOccurs</b>="1"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:integer"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:minInclusive</b>
+<b>value</b>="0" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:maxInclusive</b>
+<b>value</b>="10" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="Y" <b>minOccurs</b>="1" <b>maxOccurs</b>="1"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:integer"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:minInclusive</b>
+<b>value</b>="0" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:maxInclusive</b>
+<b>value</b>="5" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="fortPresent" type="xs:boolean"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br> 
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="terrain" type="terraintype"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br> 
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br> 
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="terraintype"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Grass" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Water" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Mountain" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; </span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">xs:simpleType</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br><br>
+
+
+<span><b>Beispiel der Nachricht</b></span><br>
+
+<span><span lang="EN-US">&lt;?</span><span lang="EN-US">xml</span><span lang="EN-US"> version="1.0"
+encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;playerH</span><b><span lang="EN-GB">alfMap</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>uniquePlayerID</b>&gt;3560ca14-5bfa-48f3-949b-da0029caf3c8&lt;/<b>uniquePlayerID</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;playerH<b>alfMapNodes</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>playerHalfMapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>X</b>&gt;2&lt;/<b>X</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>Y</b>&gt;1&lt;/<b>Y</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>fortPresent</b>&gt;false&lt;/<b>fortPresent</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>terrain</b>&gt;Water&lt;/<b>terrain</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>playerHalfMapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>playerHalfMapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>X</b>&gt;4&lt;/<b>X</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>Y</b>&gt;3&lt;/<b>Y</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>fortPresent</b>&gt;true&lt;/<b>fortPresent</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>terrain</b>&gt;Grass&lt;/<b>terrain</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>playerHalfMapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>playerHalfMapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>X</b>&gt;4&lt;/<b>X</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>Y</b>&gt;2&lt;/<b>Y</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>fortPresent</b>&gt;false&lt;/<b>fortPresent</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>terrain</b>&gt;Grass&lt;/<b>terrain</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">playerHalfMapNode</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span><span lang="DE-AT">&nbsp;&nbsp;
+&lt;/<b>playerHalfMapNodes</b>&gt;</span></span>
+
+<br><span><span lang="DE-AT">&lt;/playerH</span><b><span lang="DE-AT">alfMap</span></b><span lang="DE-AT">&gt;</span></span><br><br>
+
+
+<p><i>Achtung: </i> Um das Beispiel kurz zu halten wurden nicht alle <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">playerHalfMapNode</span> Elemente angeführt. Daher eigentlich wären pro Kartenhälfte mehr&nbsp;<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">playerHalfMapNode</span> Elemente notwendig. Dies wird vom zugehörigen Schema auch so überprüft bzw. verlangt.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115394"></a><h3>7.2. Antwort des Servers</h3><p>Der Server antwortet generisch mit einem <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">responseEnvelope</span>. Da aber hier keine Daten anfallen ist das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">data</span> Element in diesem Fall nicht enthalten. Abgesehen davon ist das Verhalten wie in der zuvor beschriebenen Nachricht. Daher im Fehlerfall sind <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">exceptionName </span>und <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">exceptionMessage </span>mit Details zum Fehler befüllt sowie das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state </span>Element mit dem Text <b>Error</b> definiert. Sollte kein Fehler vorliegen ist <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state </span>mit dem Wert <b>Okay</b> definiert.</p>
+
+<span><b>XML Schema der Nachricht</b></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT"> <b>xmlns:xs</b>="<a href="http://www.w3.org/2001/XMLSchema" class="_blanktarget">http://www.w3.org/2001/XMLSchema</a>"&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b>="responseEnvelope"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="exceptionName" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="exceptionMessage" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="state" type="statevalues"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="statevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Okay" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Error" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:schema</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br><br>
+
+<span><b>Beispiel der Nachricht</b></span><br>
+
+<span><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">responseEnvelope</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>exceptionName</b> /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>exceptionMessage</b> /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>state</b>&gt;Okay&lt;/<b>state</b>&gt;</span></span><br>
+
+<span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">responseEnvelope</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115401"></a><h3>7.3. Tipps zum Verständnis der Kartenkoordinaten</h3><p>Allgemein gilt, dass im verwendeten Koordinatensystem links oben der
+Koordinatenursprung liegt (X=0;Y=0). Rechts vom Ursprung beginnen die X Werte anzusteigen
+von 0 bis 9 (Kartenhälften wurden untereinander platziert) bzw. 19 (Kartenhälften wurden nebeneinander platziert). Unterhalb des Ursprungs
+beginnen die Y Werte anzusteigen von 0 bis 4 (Kartenhälften wurden
+nebeneinander platziert) bzw. 9 (Kartenhälften wurden untereinander platziert).
+Eine Ausnahme bilden hierbei die beiden Kartenhälften die bei Spielbeginn
+übertragen werden. Diese beinhalten nur X Werte von 0 bis 9 und Y Werte von 0
+bis 4. Wie Kartenhälften kombiniert werden (zu einem Quadrat oder Rechteck oder
+an welcher Stelle eine Kartenhälfte hinterlegt wird) kann der Client nicht
+entscheiden oder beeinflussen. Dies Entscheidung fällt der Server zufällig.&nbsp;</p>
+
+<p>Das folgende Beispiel stellt das Koordinatensystem für die Kartenhälfte dar, welche bei Spielbeginn von jedem
+Client übertragen wird. Die Koordinaten für die komplette zusammengesetzte
+Karte sind analog definiert. Achtung: Die beiden Kartenhälften werden zufällig
+zusammengesetzt, daher die erste von einem Client zugesandte Karte landet
+zufällig auf Position X=0;Y=0 bis X=9;Y=4, X=0;Y=5 bis X=9;Y=9 oder X=10;Y=0 bis
+X=19;Y=4 (daher Kartenhälften können zufällig untereinander – lange Seiten
+grenzen aneinander – oder nebeneinander – kurze Seiten grenzen aneinander –
+platziert werden). Die jeweils vom zweiten Client zugesandte Kartenhälfte füllt
+den noch freien Platz auf. Als Client sollte man daher erst den Spielstatus mit
+der vollständigen Karte erfragen bevor Wege berechnet werden, etc.</p>
+
+<table border="1" cellspacing="10" cellpadding="10">
+ <tbody><tr>
+  <td valign="center" style="text-align: center;">X=0;Y=0</td>
+  <td valign="center" style="text-align: center;">X=1;Y=0</td>
+  <td valign="center" style="text-align: center;">X=2;Y=0</td>
+  <td valign="center" style="text-align: center;">X=3;Y=0</td>
+  <td valign="center" style="text-align: center;">X=4;Y=0</td>
+  <td valign="center" style="text-align: center;">X=5;Y=0</td>
+  <td valign="center" style="text-align: center;">X=6;Y=0</td>
+  <td valign="center" style="text-align: center;">X=7;Y=0</td><td valign="center" style="text-align: center;">X=8;Y=0&nbsp;</td><td valign="center" style="text-align: center;">X=9;Y=0&nbsp;</td>
+ </tr>
+ <tr>
+  <td valign="center" style="text-align: center;">X=0;Y=1</td>
+  <td valign="center" style="text-align: center;">X=1;Y=1</td>
+  <td valign="center" style="text-align: center;">X=2;Y=1</td>
+  <td valign="center" style="text-align: center;">X=3;Y=1</td>
+  <td valign="center" style="text-align: center;">X=4;Y=1</td>
+  <td valign="center" style="text-align: center;">X=5;Y=1</td>
+  <td valign="center" style="text-align: center;">X=6;Y=1</td>
+  <td valign="center" style="text-align: center;">X=7;Y=1</td><td valign="center" style="text-align: center;">&nbsp;X=8;Y=1</td><td valign="center" style="text-align: center;">X=9;Y=1&nbsp;</td>
+ </tr>
+ <tr>
+  <td valign="center" style="text-align: center;">X=0;Y=2</td>
+  <td valign="center" style="text-align: center;">X=1;Y=2</td>
+  <td valign="center" style="text-align: center;">X=2;Y=2</td>
+  <td valign="center" style="text-align: center;">X=3;Y=2</td>
+  <td valign="center" style="text-align: center;">X=4;Y=2</td>
+  <td valign="center" style="text-align: center;">X=5;Y=2</td>
+  <td valign="center" style="text-align: center;">X=6;Y=2</td>
+  <td valign="center" style="text-align: center;">X=7;Y=2</td><td valign="center" style="text-align: center;">X=8;Y=2&nbsp;</td><td valign="center" style="text-align: center;">X=9;Y=2&nbsp;</td>
+ </tr>
+ <tr>
+  <td valign="center" style="text-align: center;">X=0;Y=3</td>
+  <td valign="center" style="text-align: center;">X=1;Y=3</td>
+  <td valign="center" style="text-align: center;">X=2;Y=3</td>
+  <td valign="center" style="text-align: center;">X=3;Y=3</td>
+  <td valign="center" style="text-align: center;">X=4;Y=3</td>
+  <td valign="center" style="text-align: center;">X=5;Y=3</td>
+  <td valign="center" style="text-align: center;">X=6;Y=3</td>
+  <td valign="center" style="text-align: center;">X=7;Y=3</td><td valign="center" style="text-align: center;">X=8;Y=3&nbsp;</td><td valign="center" style="text-align: center;">&nbsp;X=9;Y=3</td>
+ </tr><tr>
+  <td valign="center" style="text-align: center;">&nbsp;X=0;Y=4</td>
+  <td valign="center" style="text-align: center;">X=1;Y=4&nbsp;</td>
+  <td valign="center" style="text-align: center;">&nbsp;X=2;Y=4</td>
+  <td valign="center" style="text-align: center;">X=3;Y=4&nbsp;</td>
+  <td valign="center" style="text-align: center;">X=4;Y=4&nbsp;</td>
+  <td valign="center" style="text-align: center;">X=5;Y=4&nbsp;</td>
+  <td valign="center" style="text-align: center;">X=6;Y=4&nbsp;</td>
+  <td valign="center" style="text-align: center;">&nbsp;X=7;Y=4</td><td valign="center" style="text-align: center;">X=8;Y=4&nbsp;</td><td valign="center" style="text-align: center;">X=9;Y=4&nbsp;</td>
+ </tr>
+</tbody></table></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115408"></a><h2>8. Abfrage des Spielstatus</h2><p>Die Abfrage eines Spielstatus durch den Client kann erst nach der Registrierung eines Clients beginnen da hierzu die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> aber auch die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span> benötigt werden. Bei einer Abfrage über den Spielzustand werden vom Server alle für die
+Clients relevanten Details zum Spiel zurückgeliefert. Dies sind die vollständige oder teilweise Karte (je nachdem ob erst eine oder beide Clients ihre Kartenhälfte zugesandt haben) sowie Informationen, um die Aktionen der
+Clients abzustimmen (ob ein Client eine Aktion durchführen soll oder ob ein
+Client gewonnen bzw. verloren hat).</p><p>Da die Clients nur eine beschränkte
+Zeitspanne zur Verfügung haben um die nächste Spielaktion (Bewegungsoperation
+oder Übertragung einer Kartenhälfte) durchzuführen sollte der Client in
+regelmäßigen Abständen abfragen ob er die nächste Aktion berechnen und
+übertragen muss. Um zu verhindern, dass der Server überlastet wird muss zwischen zwei vom gleichen Client durchgeführten Abfragen zum Spielstatus <strong>mindestens eine Zeitspanne von 0,4 Sekunden</strong> vergehen. Dies <strong>muss</strong> der Client sicherstellen. Eine einfache/schnelle, wenn auch nicht schöne, Implementierung dafür ist <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">Thread.sleep</span>&nbsp;zwischen zwei Abfragen des&nbsp;Spielstatus.&nbsp;</p><p><strong>Polling</strong>: Ist der Fachbegriff für das hier angewandte Verfahren. Dies ist die (auch technisch) für Sie einfachste Möglichkeit beide Clients zu koordinieren. Komplexere (und damit effizientere) Verfahren lernen Sie bei Interesse in LVs wie DSE kennen.&nbsp;</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115415"></a><h3>8.1. Anfrage des Clients</h3><p>Der Client sendet ein HTTP GET Request an folgenden Endpunkt: <b><span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">http(s)://&lt;domain&gt;:&lt;port&gt;/games/&lt;SpielID&gt;/states/&lt;SpielerID&gt;</span></b></p>
+
+<p>Hierbei ist der Teil <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> mit der während der Spielerzeugung erhaltenen eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielID</span> zu ersetzen und <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span> mit der während der Registrierung vom Server mitgeteilten eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span>. Falls beide IDs dem Server bekannt sind antwortet der Server mit dem Spielstatus, andernfalls wird eine entsprechende Fehlermeldung zurückgesandt.</p>
+
+<p><i>Achtung: </i>Da die Antwort mit Daten im XML Format definiert wird sollte die Anfrage einen entsprechenden <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"accept"</span> HTTP Header beinhalten, daher <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"accept = application/xml"</span>.</p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115422"></a><h3>8.2. Antwort des Servers</h3><p>Der Server antwortet mit einem <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">responseEnvelope</span>, welches im Falle eines Fehlers (wie bereits bei den vorangegangenen
+Nachrichten) eine entsprechende Fehlerbeschreibung beinhaltet und mit dem <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> Element verdeutlicht ob ein Fehler aufgetreten ist oder nicht. Das data Element beinhaltet die eigentlichen Nutzdaten. Daher, im Wesentlichen die Informationen über die Avatare (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">players → player</span>) und die Karte. Für einen Player werden <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">uniquePlayerID</span> (eindeutige SpielerID), <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">firstName</span> (Vorname), <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">lastName</span> (Nachname),&nbsp;<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">uaccount</span> (u:account Benutzername der Universität Wien), <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> (Status des Spielers) angehängt. Vorname, Nachname und Matrikelnummer werden basierend auf den Daten die bei der Registrierung des Spielers vom Client übertragen wurden zusammengestellt. Die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">uniquePlayerID</span> entspricht der bei der Registrierung erstellten und zugesandten eindeutigen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerID</span>. Letzteres trifft nur für den Datensatz zu welcher den anfragenden Spieler repräsentiert, die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerIDs</span> der anderen Spieler entsprechen nicht deren realen <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">SpielerIDs</span>. Der <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> wiederum zeigt den Status
+des Clients an, dieser kann entweder sein, dass vom Server für diesen Client ein neuer Befehl erwartet wird (<b>MustAct</b>), dass kein Befehl erwartet wird (<b>MustWait</b>), dass der Client verloren hat (<b>Lost</b>)
+oder dass der Client gewonnen hat (<b>Won</b>).</p>
+
+<p>Darüber ist die <b>Spielkarte im Element</b> <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">map</span> angeführt. Dessen Inhalt, einzelne Spielfelder, ist optional und wird erst dann vorhanden sein, wenn zumindest einer der Clients eine Kartenhälfte übertragen hat. Pro Kartenfeld wird angezeigt ob sich Avatare der Clients auf dem Feld befinden (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">playerPositionState</span>), welches Terrain das Feld aufweist (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">terrain</span>), ob sich
+ein Schatz auf dem Feld befindet (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">treasureState</span>) und ob sich ein Fort auf dem Feld befindet (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">fortState</span>). Weiters werden die Koordinaten angegeben daher X Koordinate (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">X</span>) und Y Koordinate (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">Y</span>).</p>
+
+<p>Das Element <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">playerPositionState</span> zeigt an ob kein Avatar auf dem Feld vorhanden ist (<b>NoPlayerPresent</b>), der Avatar des Gegnerclients sich auf dem Feld befindet (<b>EnemyPlayerPosition</b>), sich der Avatar des anfragenden Clients auf dem Feld befindet (<b>MyPlayerPosition</b>), oder Avatare beider Clients (<b>BothPlayerPosition</b>). Das Element <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">terrain</span> zeigt die Feldart an als <b>Water</b>, <b>Grass</b> oder <b>Mountain</b>. Bezüglich des Schatzes (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">treasureState</span>) kann
+entweder gemeldet werden, dass sich kein Schatz darauf befindet oder es nicht bekannt ist ob sich auf dem Feld ein Schatz befindet (<b>NoOrUnknownTreasureState</b>). Alternativ wird mitgeteilt, dass der eigene Schatz sich auf dem Feld befindet (<b>MyTreasureIsPresent</b>). Sobald ein Schatz "aufgehoben" wurde, daher sich der passende Avatar auf dem
+Feld befunden hat, auf dem ein Schatz gemeldet wurde wird nicht mehr länger <em>MyTreasureIsPresent</em> als wahr angegeben. Bezüglich der Burg weist das Element <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">fortState</span> entweder den Wert auf <b>NoOrUnknownFortState</b> wenn nicht bekannt ist ob
+sich auf den Feld eine Burg befindet bzw. dort keine Burg ist oder alternativ wird angezeigt, dass die eigene Burg sich dort befindet (<b>MyFortPresent</b>) oder die gegnerische (<b>EnemyFortPresent</b>). <em>Eine einmal aufgedeckte Burg wird in jeder nachfolgenden Abfragen in der Karte vermerkt (gilt auch für nicht aufgehobene aber aufgedeckte Schätze).</em></p>
+
+<p>Relevant ist außerdem noch das Element <span lang="DE-AT" class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">gameStateId</span>. Dieses beinhaltet eine zufällig erstellte ID, welche es ermöglicht zu erkennen
+ob die vom Server angelieferten Statusinformationen sich seit der letzten Abfrage geändert haben. Ist dies der Fall hat sich die <span lang="DE-AT" class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">gameStateId</span>
+geändert. Weiters lässt sich über das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">collectedTreasure</span> Flag im <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">player</span> Element erkennen ob der jeweilige Client den
+Schatz bereits gefunden hat oder nicht. Diese Information wiederum kann verwendet werden, um zu erkennen ob der Client noch nach dem Schatz oder bereits nach der gegnerischen Burg suchen muss.</p>
+
+<p><b>Informationen zur Ordnung/Sortierung der Inhalte:</b> <em>Die Details zum Spieler und die Details zur Karte (Felder) werden vom Server ungeordnet retourniert. Verwenden Sie daher die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">PlayerID</span> (für den Spieler) und die <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">X/Y </span>Koordinaten (für die Karte bzw. Felder), um die jeweils passenden Informationen für Sie abzufragen bzw. zu ermitteln.</em><em style="font-size: 0.875rem;"><span lang="DE-AT">&nbsp;</span></em></p>
+
+<span><b>XML Schema der Nachricht</b></span><br>
+
+<span align="left">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br>
+
+<span align="left">&lt;<b>xs:schema</b> <b>xmlns:xs</b>="<a href="http://www.w3.org/2001/XMLSchema" class="_blanktarget">http://www.w3.org/2001/XMLSchema</a>"
+<b>elementFormDefault</b>="qualified"&gt;</span><br>
+
+<span align="left">&nbsp;&nbsp; <span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b>="responseEnvelope"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="exceptionName" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="exceptionMessage" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="state" type="statevalues"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="data" <b>minOccurs</b>="0" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType
+name</b>="gameState"
+&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="players" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="map" <b>minOccurs</b>="0" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="gameStateId" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="players"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>maxOccurs</b>="2" <b>minOccurs</b>="1" <b>ref</b>="player" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="player"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="uniquePlayerID" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="firstName" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="lastName" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="uaccount" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="state" type="playerGameStatevalues"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="collectedTreasure" <b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="uniquePlayerID" type="xs:string"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="firstName" type="xs:string"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="lastName" type="xs:string"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="uaccount" type="xs:string"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="collectedTreasure" type="xs:boolean"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="map" &nbsp;<b>minOccurs</b>="1"&nbsp;<b>maxOccurs</b>="1"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>ref</b>="mapNodes" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="mapNodes"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="0" <b>maxOccurs</b>="100" <b>ref</b>="mapNode" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="mapNode"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" <b>ref</b>="playerPositionState" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" <b>ref</b>="terrain" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" <b>ref</b>="treasureState" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" <b>ref</b>="fortState" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" <b>ref</b>="X" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" <b>ref</b>="Y" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="playerPositionState" type="playerStatevalues" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="terrain" type="terrainStatevalues"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="treasureState" type="treasureStatevalues"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="fortState" type="fortStatevalues"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="X"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:integer"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:minInclusive</b>
+<b>value</b>="0" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:maxInclusive</b> <b>value</b>="19" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="Y"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:integer"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:minInclusive</b>
+<b>value</b>="0" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:maxInclusive</b>
+<b>value</b>="9" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br> 
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="gameStateId" type="xs:string"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="statevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Okay" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Error" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="playerStatevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="NoPlayerPresent" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="EnemyPlayerPosition" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="MyPlayerPosition" /&gt;</span></span><br> 
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="BothPlayerPosition" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="terrainStatevalues"&gt;</span></span><span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Water" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Grass" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Mountain" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="playerGameStatevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Won" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Lost" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="MustAct" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="MustWait" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="treasureStatevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="NoOrUnknownTreasureState" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b> <b>value</b>="MyTreasureIsPresent"
+/&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="fortStatevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="NoOrUnknownFortState" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="MyFortPresent" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="EnemyFortPresent" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; </span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">xs:simpleType</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT">&gt;</span><span lang="DE-AT"></span></span><br><br>
+
+<span><b>Beispiel der Nachricht</b></span><br>
+
+<span><span lang="EN-GB">&lt;?</span><span lang="EN-GB">xml</span><span lang="EN-GB"> version="1.0"
+encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">responseEnvelope</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>exceptionName</b> /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>exceptionMessage</b> /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>state</b>&gt;Okay&lt;/<b>state</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>data</b>
+<b>xmlns:xsi</b>="<a href="http://www.w3.org/2001/XMLSchema-instance" class="_blanktarget">http://www.w3.org/2001/XMLSchema-instance</a>" <b>xsi:type</b>="gameState"&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>players</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>player</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>uniquePlayerID</b>&gt;6c4362b5-5636-41b8-aaae-6daba4aea91b&lt;/<b>uniquePlayerID</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>firstName</b>&gt;Max&lt;/<b>firstName</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>lastName</b>&gt;Mustermann&lt;/<b>lastName</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>uaccount</b>&gt;musterm55&lt;/<b>uaccount</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>state</b>&gt;MustAct&lt;/<b>state</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>collectedTreasure</b>&gt;false&lt;/<b>collectedTreasure</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>player</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>player</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>uniquePlayerID</b>&gt;2e31d1c8-e91d-4f55-88ad-ffcd1dae48f0&lt;/<b>uniquePlayerID</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>firstName</b>&gt;Maxin&lt;/<b>firstName</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>lastName</b>&gt;Musterfrau&lt;/<b>lastName</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>uaccount</b>&gt;mustefm74&lt;/<b>uaccount</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>state</b>&gt;MustWait&lt;/<b>state</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>collectedTreasure</b>&gt;false&lt;/<b>collectedTreasure</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>player</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>players</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>map</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>mapNodes</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>mapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>playerPositionState</b>&gt;NoPlayerPresent&lt;/<b>playerPositionState</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>terrain</b>&gt;Water&lt;/<b>terrain</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>treasureState</b>&gt;NoOrUnknownTreasureState&lt;/<b>treasureState</b>&gt;</span></span><br> 
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>fortState</b>&gt;NoOrUnknownFortState&lt;/<b>fortState</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>X</b>&gt;2&lt;/<b>X</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>Y</b>&gt;1&lt;/<b>Y</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>mapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>mapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>playerPositionState</b>&gt;NoPlayerPresent&lt;/<b>playerPositionState</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>terrain</b>&gt;Grass&lt;/<b>terrain</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>treasureState</b>&gt;NoOrUnknownTreasureState&lt;/<b>treasureState</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>fortState</b>&gt;NoOrUnknownFortState&lt;/<b>fortState</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>X</b>&gt;6&lt;/<b>X</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>Y</b>&gt;4&lt;/<b>Y</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>mapNode</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>mapNodes</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>map</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>gameStateId</b>&gt;430bdf29-5e61-4950-8408-ac40e9fb1176&lt;/<b>gameStateId</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>data</b>&gt;</span></span><br>
+
+<span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">responseEnvelope</span></b><span lang="DE-AT">&gt;<br><br></span></span>
+
+<p><b>Achtung:</b> <em>Um das Beispiel kurz zu halten wurden
+nicht alle mapNode Elemente angeführt. Daher eigentlich wären pro Karte
+zumindest die hälfte bis alle möglichen mapNode Elemente notwendig. Dies wird vom
+zugehörigen Schema auch so überprüft bzw. verlangt. </em></p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115429"></a><h2>9. Übertragung einer Bewegung</h2><p>Sobald ein Client an der Reihe ist (daher im Spielstatus angezeigt wird, dass die nächste Aktion gesendet werden muss) kann der Client eine Spielbewegung übertragen. Dies ist allerdings erst möglich sobald die Kartenhälften beider Clients bereits übertragen worden sind. Die Übertragung der Bewegungen erfolgt immer schrittweise, daher benötigt z.B. die
+Bewegung zwischen zwei Grasfeldern 2 Bewegungen in Richtung (ein “Bewegungsnachricht“ eines Clients überträgt immer nur eine einmalige Bewegung in eine Bewegungsrichtung) des entsprechenden Feldes um das alte Grasfeld zu
+verlassen und um das neue zu betreten. <i>Weitere Details und Beispiele hierzu sind in der <a href="https://moodle.univie.ac.at/mod/book/view.php?id=14327088" target="_blank">Spielidee</a> zu finden.</i></p></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115436"></a><h3>9.1. Anfrage des Clients</h3><p>Der Client sendet einen HTTP POST Request an folgenden Endpunkt:<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">&nbsp;</span><b><span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">http(s)://&lt;domain&gt;:&lt;port&gt;/games/&lt;SpielID&gt;/moves</span></b></p>
+
+<p>Die Anfrage beinhaltet im Body XML Daten und wird auch mit XML Daten beantwortet. Daher sollte die Anfrage einen entsprechenden <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"accept"</span> HTTP Header beinhalten, daher <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">"accept = application/xml"</span>. Die Daten, welche im Body
+übertragen werden bestehen aus der <b>SpielerID,</b> welche bei der Registrierung des Spielers dem Client mitgeteilt worden ist (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">uniquePlayerID</span>) sowie dem Bewegungsbefehl (<span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">move</span>). Der Bewegungsbefehl beinhaltet die Richtung in welche sich der Avatar, welcher durch den Client gesteuert wird, bewegen soll. Daher der Avatar kann sich nach
+oben (<b>Up</b>), links (<b>Left</b>), rechts (<b>Right</b>), sowie unten (<b>Down</b>) bewegen.</p>
+
+<span><b>XML Schema der Nachricht</b></span><br>
+
+<sapn><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT"> <b>xmlns:xs</b>="<a href="http://www.w3.org/2001/XMLSchema" class="_blanktarget">http://www.w3.org/2001/XMLSchema</a>" <b>elementFormDefault</b>="qualified"&gt;</span></span><br>
+
+<span><span lang="DE-AT">&nbsp;&nbsp;
+</span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b>="playerMove"&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b> <b>ref</b>="uniquePlayerID"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b> <b>ref</b>="move"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b> <b>name</b>="uniquePlayerID"
+type="xs:string" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:element</b> <b>name</b>="move"
+type="moveValues" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b> <b>name</b>="moveValues"&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b> <b>base</b>="xs:string"&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b> <b>value</b>="Up" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b> <b>value</b>="Down" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b> <b>value</b>="Left" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b> <b>value</b>="Right" /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:schema</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br><br>
+
+<span><b>Beispiel der Nachricht</b></span><br>
+
+<span><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">playerMove</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>uniquePlayerID</b>&gt;1c44419e-304a-4caa-8901-b7d8c62898b5&lt;/<b>uniquePlayerID</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>move</b>&gt;Right&lt;/<b>move</b>&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">playerMove</span></b><span lang="EN-GB">&gt;</span></span></sapn></div><a href="#toc">&uarr; top</a><div class="book_chapter"><a name="ch115443"></a><h3>9.2. Antwort des Servers</h3><p>Der Server antwortet generisch mit einem <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">responseEnvelope</span>. Da aber hier keine Daten anfallen ist das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">data</span> Element in diesem Fall nicht enthalten. Abgesehen davon ist das Verhalten wie in der zuvor beschriebenen Nachricht. Daher im Problemfall sind <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">exceptionName</span> und <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">exceptionMessage</span> mit Details zum Problem befüllt sowie das <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> Element mit dem Text <b>Error</b> gefüllt. Sollte kein Fehler vorliegen ist <span class="" style="font-family: &quot;Courier New&quot;, Courier, mono;">state</span> mit dem Wert <b>Okay</b> befüllt.</p>
+
+<span><b>XML Schema der Nachricht</b></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&lt;</span><b><span lang="DE-AT">xs:schema</span></b><span lang="DE-AT"> <b>xmlns:xs</b>="<a href="http://www.w3.org/2001/XMLSchema" class="_blanktarget">http://www.w3.org/2001/XMLSchema</a>"&gt;</span></span><br>
+
+<span align="left"><span lang="DE-AT">&nbsp;&nbsp; </span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">xs:element</span></b><span lang="EN-GB"> <b>name</b>="responseEnvelope"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="exceptionName" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="exceptionMessage" type="xs:string"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:element</b>
+<b>name</b>="state" type="statevalues"
+<b>minOccurs</b>="1" <b>maxOccurs</b>="1" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:sequence</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:complexType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:element</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>xs:simpleType</b>
+<b>name</b>="statevalues"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:restriction</b>
+<b>base</b>="xs:string"&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Okay" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;<b>xs:enumeration</b>
+<b>value</b>="Error" /&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/<b>xs:restriction</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&nbsp;&nbsp; &lt;/<b>xs:simpleType</b>&gt;</span></span><br>
+
+<span align="left"><span lang="EN-GB">&lt;/</span><b><span lang="EN-GB">xs:schema</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br><br>
+
+<span><b>Beispiel der Nachricht</b></span>
+
+<br><span><span lang="DE-AT">&lt;?</span><span lang="DE-AT">xml</span><span lang="DE-AT"> version="1.0" encoding="UTF-8"?&gt;</span></span><br>
+
+<span><span lang="EN-GB">&lt;</span><b><span lang="EN-GB">responseEnvelope</span></b><span lang="EN-GB">&gt;</span><span lang="EN-GB"></span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>exceptionName</b> /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>exceptionMessage</b> /&gt;</span></span><br>
+
+<span><span lang="EN-GB">&nbsp;&nbsp; &lt;<b>state</b>&gt;Okay&lt;/<b>state</b>&gt;</span></span><br>
+
+<span><span lang="DE-AT">&lt;/</span><b><span lang="DE-AT">responseEnvelope</span></b><span lang="DE-AT">&gt;</span></span></div><a href="#toc">&uarr; top</a>
+</body>
+</html>
