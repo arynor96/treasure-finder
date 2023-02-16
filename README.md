@@ -5,7 +5,7 @@ Client-Server Architecture individual project.
 The project consists in a client and a server, which I have implemented during [Software Engineering 1][1] class at the University of Vienna. The network communication was already implemented by the [lecturer][2], and my task was to develop the client and the server. <br>
 
 Summary of the tasks and phases of the projects are available at the end of this readme file.
-Full project description as received during class can be found inside the Information folder in German.
+Full project description, as received during class, can be found inside the Assignment folder in German language.
 
 
 #### Highlights of what I have done:
@@ -24,13 +24,13 @@ Full project description as received during class can be found inside the Inform
 #### Short description and my design decisions:
 
 
-Short description of how the game works: Firstly, the client has to establish connection to the server. Then, wait for the second player(client) to also register to the game. When it is first's client turn, generate a valid half map and send it to the server. The server will merge those two maps and place treasures randomly on each player's half. After that, the game starts. As mentioned earlier, the game is turn based and each client has to send moves to the server to go to another field. The client can only move to the left, right, up or down. The client can never move outside the map or into a water field (it looses instantly). While moving, the AI has to firstly discover the treasure and then the enemy's castle. From a mountain field, the AI can see if there is a treasure or a castle around the field (8 fields around the current field). The first client to pick the treasure and reach the enemy castle wins.
+Short description of how the game works: Firstly, the client has to establish a connection to the server. Then, wait for the second player(client) to also register to the game. When it is first's client turn, generate a valid half map and send it to the server. The same will do the second client as well. The server will merge those two maps and place treasures randomly on each player's half. After that, the game starts. As mentioned earlier, the game is turn based and each client has to send moves to the server to go to another field. The client can only move to the left, right, up or down. The client can never move outside the map or into a water field (it looses instantly). While moving, the AI has to firstly discover the treasure and then the enemy's castle. From a mountain field, the AI can see if there is a treasure or a castle around the current position (8 fields around the current field). The first client to pick the treasure and reach the enemy castle wins.
 
 
 * Used converters to receive and send the network data.
 * Map is generated randomly, and then it is checked to see if the rules are fulfilled, if not, it is generated again.
 * Used Floodfill Algorithm to check for islands.
-* Instead of having at least 5 mountain fields, I have decided to have at least 15 so that my map is _harder_ and require more steps to find my castle.
+* Instead of having at least 5 mountain fields, I have decided to have at least 15 so that my map is _harder_ so that the enemy requires more steps to find my castle.
 * Castle is not randomly positioned, but it is placed on the most inaccessible grass field on the map. (None to little grass fields around it)
 * Used strategy pattern to switch between treasure finding and castle finding.
 * My AI will choose as target the most unexplored zone of the map, that means a position which has many neighbor fields that are unexplored yet.
@@ -39,7 +39,7 @@ Short description of how the game works: Firstly, the client has to establish co
 <br>
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/arynor96/treasure-finder/main/Dokumentation/Teilaufgabe%201%20-%20Planung/client_klassendiagramm.svg?token=GHSAT0AAAAAAB6MBAXPUV5LGWC4JTQKDWVKY7NOWLA"/>
+  <img src="https://github.com/arynor96/treasure-finder/blob/main/Dokumentation/Teilaufgabe%201%20-%20Planung/client_klassendiagramm_png.png?raw=true"/>
   Client Class Diagram
 </p>
 
@@ -47,7 +47,7 @@ Short description of how the game works: Firstly, the client has to establish co
 
 <br>
 
-## Our full task:
+## Summary of our tasks and phases:
 
 We had to follow these steps during the class:
 
