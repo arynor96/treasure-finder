@@ -24,13 +24,13 @@ Full project description, as received during class, can be found inside the Assi
 #### Short description and my design decisions:
 
 
-Short description of how the game works: Firstly, the client has to establish connection to the server. Then, wait for the second player(client) to also register to the game. When it is first's client turn, generate a valid half map and send it to the server. The server will merge those two maps and place treasures randomly on each player's half. After that, the game starts. As mentioned earlier, the game is turn based and each client has to send moves to the server to go to another field. The client can only move to the left, right, up or down. The client can never move outside the map or into a water field (it looses instantly). While moving, the AI has to firstly discover the treasure and then the enemy's castle. From a mountain field, the AI can see if there is a treasure or a castle around the field (8 fields around the current field). The first client to pick the treasure and reach the enemy castle wins.
+Short description of how the game works: Firstly, the client has to establish a connection to the server. Then, wait for the second player(client) to also register to the game. When it is first's client turn, generate a valid half map and send it to the server. The same will do the second client as well. The server will merge those two maps and place treasures randomly on each player's half. After that, the game starts. As mentioned earlier, the game is turn based and each client has to send moves to the server to go to another field. The client can only move to the left, right, up or down. The client can never move outside the map or into a water field (it looses instantly). While moving, the AI has to firstly discover the treasure and then the enemy's castle. From a mountain field, the AI can see if there is a treasure or a castle around the current position (8 fields around the current field). The first client to pick the treasure and reach the enemy castle wins.
 
 
 * Used converters to receive and send the network data.
 * Map is generated randomly, and then it is checked to see if the rules are fulfilled, if not, it is generated again.
 * Used Floodfill Algorithm to check for islands.
-* Instead of having at least 5 mountain fields, I have decided to have at least 15 so that my map is _harder_ and require more steps to find my castle.
+* Instead of having at least 5 mountain fields, I have decided to have at least 15 so that my map is _harder_ so that the enemy requires more steps to find my castle.
 * Castle is not randomly positioned, but it is placed on the most inaccessible grass field on the map. (None to little grass fields around it)
 * Used strategy pattern to switch between treasure finding and castle finding.
 * My AI will choose as target the most unexplored zone of the map, that means a position which has many neighbor fields that are unexplored yet.
@@ -47,7 +47,7 @@ Short description of how the game works: Firstly, the client has to establish co
 
 <br>
 
-## Our full task:
+## Summary of our tasks and phases:
 
 We had to follow these steps during the class:
 
