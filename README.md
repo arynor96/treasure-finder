@@ -5,7 +5,7 @@ Client-Server Architecture individual project.
 The project consists in a client and a server, which I have implemented during [Software Engineering 1][1] class at the University of Vienna. The network communication was already implemented by the [lecturer][2], and my task was to develop the client and the server. <br>
 
 Summary of the tasks and phases of the projects are available at the end of this readme file.
-Full project description as received during class can be found inside the Information folder in German.
+Full project description, as received during class, can be found inside the Assignment folder in German language.
 
 
 #### Highlights of what I have done:
@@ -39,7 +39,7 @@ Short description of how the game works: Firstly, the client has to establish co
 <br>
 
 <p align="middle">
-  <img src="https://raw.githubusercontent.com/arynor96/treasure-finder/main/Dokumentation/Teilaufgabe%201%20-%20Planung/client_klassendiagramm.svg?token=GHSAT0AAAAAAB6MBAXPUV5LGWC4JTQKDWVKY7NOWLA"/>
+  <img src="https://github.com/arynor96/treasure-finder/blob/main/Dokumentation/Teilaufgabe%201%20-%20Planung/client_klassendiagramm_png.png?raw=true"/>
   Client Class Diagram
 </p>
 
