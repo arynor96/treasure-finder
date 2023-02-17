@@ -4,6 +4,8 @@ Client-Server Architecture individual project.
 
 The project consists in a client and a server, which I have implemented during [Software Engineering 1][1] class at the University of Vienna. The network communication was already implemented by the [lecturer][2], and my task was to develop the client and the server. <br>
 
+The client has to connect to a server, generate a map, send it to the server and then send moves so that it is able to find a treasure and then the enemy castle. The server acts as a _referee_ and checks if the map rules are fulfilled, the moves are valid and ensures that the game runs in a correct turn based order.
+
 The client has an artificial intelligence that does not require human intervention. All decisions should be taken by the artificial intelligence. In the description below, there is more about that.
 
 Summary of the tasks and phases of the projects are available at the end of this readme file.
